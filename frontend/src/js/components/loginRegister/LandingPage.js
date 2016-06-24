@@ -77,6 +77,7 @@ class LandingPage extends Component {
       //call the api and set the session storage
       console.log('successfully logged in');
       sessionStorage.telltaleAuth = 'telltaleauth';
+      location.href = '/';
     }
   }
 

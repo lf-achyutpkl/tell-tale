@@ -44,7 +44,8 @@
           './src/css/fontface.css',
           './src/css/custom.css',
           'node_modules/toastr/build/toastr.css',
-          'node_modules/jquery-confirm/dist/jquery-confirm.min.css'
+          'node_modules/jquery-confirm/dist/jquery-confirm.min.css',
+          './src/css/main.css',
         ],
         img: ['./src/img/*', './src/img/**/*'],
         fonts: './src/css/fonts/*',
