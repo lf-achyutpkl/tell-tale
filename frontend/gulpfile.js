@@ -34,11 +34,15 @@
       src: {
         js: './src/js/**/*.js*',
         css: [
+          './src/css/bootstrap.min.css',
+          './src/css/stylish-portfolio.css',
+          './src/css/rotate-word.css',
+          './src/css/remodal-default-theme.css',
           './src/css/font-awesome.css',
           './src/css/glyphicons.css',
-          './src/css/bootstrap.min.css',
           './src/css/forms.css',
           './src/css/fontface.css',
+          './src/css/custom.css',
           'node_modules/toastr/build/toastr.css',
           'node_modules/jquery-confirm/dist/jquery-confirm.min.css'
         ],
@@ -49,6 +53,7 @@
           './src/custom-ui/bootstrap.js',
           './src/custom-ui/plugins.js',
           './src/custom-ui/app.js',
+          './src/custom-ui/remodal.js',
           'node_modules/jquery-confirm/dist/jquery-confirm.min.js'
         ]
       },
