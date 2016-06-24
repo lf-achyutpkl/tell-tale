@@ -30,9 +30,6 @@ import com.lftechnology.tell.tale.service.UserService;
 public class UserRs {
 
     @Inject
-    private UserDao userDao;
-
-    @Inject
     private UserService userService;
 
     @POST
