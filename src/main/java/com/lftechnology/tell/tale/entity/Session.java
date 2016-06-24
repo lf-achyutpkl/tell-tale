@@ -37,7 +37,8 @@ public class Session extends AbstractEntity implements Serializable {
     @NotNull(message = "User cannot be null")
     private User user;
 
-    private String encryptedPrivateKey;
+    @Column(name="encrypted_password")
+    private String encryptedPassword;
 
     @Column(name = "expires_at", columnDefinition = "uuid")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
