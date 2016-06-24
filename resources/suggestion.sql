@@ -67,7 +67,7 @@ ALTER TABLE ONLY encryption_keys
 CREATE TABLE sessions(
 	id uuid NOT NULL,
 	user_id uuid NOT NULL,
-	encrypted_password text NOT NULL,
+	encrypted_private_key text NOT NULL,
 	expires_at time with time zone NOT NULL
 );
 ALTER TABLE sessions OWNER TO postgres;
