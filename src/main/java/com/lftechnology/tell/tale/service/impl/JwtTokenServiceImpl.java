@@ -14,6 +14,7 @@ import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 import com.auth0.jwt.internal.org.apache.commons.codec.binary.Base64;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.UnauthorizedException;
 import com.lftechnology.tell.tale.service.JwtTokenService;
 
@@ -42,12 +43,12 @@ public class JwtTokenServiceImpl implements JwtTokenService{
 	}
 
 	@Override
-	public Map<String, Object> makePayload(String randomText, Integer expiryAfterMinutes) {
+	public Map<String, Object> makePayload(User user, String randomText, Integer expiryAfterMinutes) {
 		Base64 encoder = new Base64(true);
+		randomText = randomText + "|" + user.getId();
         String encodedRandomText = encoder.encodeToString(randomText.getBytes());
 
         LocalDateTime now = LocalDateTime.now();
-
         return new HashMap<String, Object>(){
         	{
         		put(ISS, ISSUER);
@@ -60,10 +61,11 @@ public class JwtTokenServiceImpl implements JwtTokenService{
 	}
 
 	@Override
-	public String decodeRandomText(String token) {
+	public String[] decodePayLoad(String token) {
 		Map<String, Object> map = validate(token);
         String sub = (String) map.get(SUB);
-        return new String(Base64.decodeBase64(sub.getBytes()));
+        String payload = new String(Base64.decodeBase64(sub.getBytes()));
+        return  payload.split("\\|");
 	}
 
 	@Override
