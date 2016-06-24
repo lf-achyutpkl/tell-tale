@@ -1,22 +1,19 @@
-#page-container .container-fluid{
+#page-container {
     margin-top: 50px;
     padding: 0;
 }
 
-#page-container{
-    width: 100%;
-}
-
-#main-container{
-    width: 100%;
+.row .sidebar {
+    padding-left: 0px;
 }
 
 .sidebar ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
     width: 100%;
     background-color: #f1f1f1;
+    margin-bottom: -5000px;
+    padding:0 0 5000px 0;
+    overflow: hidden;
 }
 
 .sidebar li a {
@@ -26,7 +23,7 @@
     text-decoration: none;
 }
 
-.sidebar li a:hover{
+.sidebar li a:hover {
     background-color: #7fbbda;
     color: white;
 }

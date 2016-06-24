@@ -1,0 +1,18 @@
+/*Modal*/
+.modal-container {
+    clear:both
+    position: relative;
+}
+
+.modal-container .modal, .modal-container .modal-backdrop {
+    position: absolute;
+}
+
+/*End of Modal*/
+
+/*Tools*/
+.user a.btn {
+    float: right;
+}
+
+/*End of Tools*/

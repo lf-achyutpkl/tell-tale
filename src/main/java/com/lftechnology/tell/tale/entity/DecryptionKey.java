@@ -19,10 +19,10 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  */
 @Entity
-@Table(name = "public_keys")
+@Table(name = "decryption_keys")
 @Getter
 @Setter
-public class PublicKey extends AbstractEntity implements Serializable {
+public class DecryptionKey extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -515722889297668323L;
 
