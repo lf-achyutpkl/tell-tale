@@ -12,7 +12,7 @@ class Sidebar extends React.Component {
     return (
       <div className="col-md-3 sidebar">
         <ul>
-          <li><a href="/messages">All Messages</a></li>
+          <li><a href="/suggestions">All Messages</a></li>
           <li><a href="#">Starred Messages</a></li>
           <li><a href="#">All Messages</a></li>
           <li><a href="#">Starred Messages</a></li>
