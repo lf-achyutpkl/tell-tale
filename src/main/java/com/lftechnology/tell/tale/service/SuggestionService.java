@@ -1,4 +1,4 @@
-package com.lftechnology.tell.tale.dao;
+package com.lftechnology.tell.tale.service;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,10 +10,9 @@ import com.lftechnology.tell.tale.entity.Suggestion;
  * @author Prajjwal Raj Kandel<prajjwalkandel@lftechnology.com>
  *
  */
-public interface SuggestionDao {
-    public Suggestion save(Suggestion suggestion);
+public interface SuggestionService {
 
-    public Suggestion update(Suggestion suggestion);
+    public Suggestion save(Suggestion suggestion);
 
     public Suggestion findOne(UUID id);
 
@@ -24,6 +23,4 @@ public interface SuggestionDao {
     public void remove(Suggestion suggestion);
 
     public void removeById(UUID id);
-    
-    public long count();
 }

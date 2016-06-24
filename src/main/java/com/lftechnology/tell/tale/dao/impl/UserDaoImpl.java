@@ -90,4 +90,11 @@ public class UserDaoImpl implements UserDao {
             throw new ParameterFormatException("Pagination query accepts only number value.");
         }
     }
+
+    @Override
+    public long count() {
+        TypedQuery<User> query = em.createQuery("Select u from User u",User.class);
+        List<User> users = query.getResultList();
+        return users.size();
+    }
 }
