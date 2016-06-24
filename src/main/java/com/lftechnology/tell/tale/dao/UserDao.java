@@ -3,6 +3,7 @@ package com.lftechnology.tell.tale.dao;
 import java.util.List;
 import java.util.UUID;
 
+import com.lftechnology.tell.tale.entity.Token;
 import com.lftechnology.tell.tale.entity.User;
 
 /**
@@ -26,4 +27,8 @@ public interface UserDao {
     public void removeById(UUID id);
     
     public long count();
+    
+	public User login(User user);
+	
+	public void logout(Token token);
 }

@@ -14,6 +14,7 @@ import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 import com.auth0.jwt.internal.org.apache.commons.codec.binary.Base64;
+import com.lftechnology.tell.tale.exception.UnauthorizedException;
 import com.lftechnology.tell.tale.service.JwtTokenService;
 
 /**
@@ -23,6 +24,7 @@ import com.lftechnology.tell.tale.service.JwtTokenService;
  */
 public class JwtTokenServiceImpl implements JwtTokenService{
 	
+	public static final Integer TOKEN_EXPIRE_AT = 10;
     private static final String APP_SECRET_KEY = "telltale";
     private static final String AUDIENCE = "1";
 
@@ -74,13 +76,13 @@ public class JwtTokenServiceImpl implements JwtTokenService{
             LocalDateTime expiry = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 
             if (expiry.isAfter(LocalDateTime.now())) {
-                throw new RuntimeException();
+                throw new UnauthorizedException("Invalid user request");
             }
 
             return decodedPayload;
         } catch (InvalidKeyException | NoSuchAlgorithmException | IllegalStateException | SignatureException | IOException
                 | JWTVerifyException e) {
-            throw new RuntimeException();
+        	throw new UnauthorizedException("Invalid user request");
         }
 	}
 }

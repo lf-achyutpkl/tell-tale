@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.lftechnology.tell.tale.entity.Token;
 import com.lftechnology.tell.tale.entity.User;
 
 /**
@@ -26,4 +27,8 @@ public interface UserService {
     public void remove(User user);
 
     public void removeById(UUID id);
+    
+	public Token login(User userObj);
+	
+	public void logout(Token token);
 }

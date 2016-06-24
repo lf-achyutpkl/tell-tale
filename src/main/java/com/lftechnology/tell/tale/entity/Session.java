@@ -31,6 +31,12 @@ import com.lftechnology.tell.tale.util.LocalDateTimeSerializer;
 public class Session extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -515722889297668323L;
+    
+    public Session(User user,String encryptedPrivateKey, LocalDateTime expiresAt) {
+    	this.user = user;
+    	this.encryptedPrivateKey = encryptedPrivateKey;
+    	this.expiresAt = expiresAt;
+    }
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -45,5 +51,5 @@ public class Session extends AbstractEntity implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime expiresAt;
-
+    
 }

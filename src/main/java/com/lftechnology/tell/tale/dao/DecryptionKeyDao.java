@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.lftechnology.tell.tale.entity.DecryptionKey;
+import com.lftechnology.tell.tale.entity.User;
 
 /**
  * 
@@ -24,4 +25,6 @@ public interface DecryptionKeyDao {
     public void remove(DecryptionKey decryptionKey);
 
     public void removeById(UUID id);
+    
+    public DecryptionKey getDecryptionKey(User user);
 }

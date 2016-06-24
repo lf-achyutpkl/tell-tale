@@ -10,7 +10,7 @@ public class UnauthorizedException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public UnauthorizedException() {
-        super();
+        super("Invalid user request");
     }
 
     public UnauthorizedException(String message) {

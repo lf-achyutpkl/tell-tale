@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import com.lftechnology.tell.tale.dao.DecryptionKeyDao;
 import com.lftechnology.tell.tale.entity.DecryptionKey;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -90,4 +91,9 @@ public class DecryptionKeyDaoImpl implements DecryptionKeyDao {
             throw new ParameterFormatException("Pagination query accepts only number value.");
         }
     }
+
+	@Override
+	public DecryptionKey getDecryptionKey(User user) {
+		return em.createNamedQuery(DecryptionKey.GET_PRIVATE_KEY,DecryptionKey.class).setParameter("user",user).getResultList().get(0);
+	}
 }
