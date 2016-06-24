@@ -9,8 +9,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import com.lftechnology.tell.tale.dao.UserDao;
-import com.lftechnology.tell.tale.entity.User;
+import com.lftechnology.tell.tale.dao.DecryptionKeyDao;
+import com.lftechnology.tell.tale.entity.DecryptionKey;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -21,13 +21,13 @@ import com.lftechnology.tell.tale.exception.ParameterFormatException;
  */
 
 @Transactional
-public class UserDaoImpl implements UserDao {
+public class DecryptionKeyDaoImpl implements DecryptionKeyDao {
 
     @Inject
     EntityManager em;
 
     @Override
-    public User save(User entity) {
+    public DecryptionKey save(DecryptionKey entity) {
         try {
             em.persist(entity);
             em.flush();
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User update(User entity) {
+    public DecryptionKey update(DecryptionKey entity) {
         try {
             entity = em.merge(entity);
             em.flush();
@@ -51,35 +51,35 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findOne(UUID id) {
-        return em.find(User.class, id);
+    public DecryptionKey findOne(UUID id) {
+        return em.find(DecryptionKey.class, id);
     }
 
     @Override
-    public List<User> findAll() {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
+    public List<DecryptionKey> findAll() {
+        TypedQuery<DecryptionKey> query = em.createQuery("SELECT dk FROM DecryptionKey dk", DecryptionKey.class);
         return query.getResultList();
     }
 
     @Override
-    public List<User> find(String start, String offset) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u ", User.class);
+    public List<DecryptionKey> find(String start, String offset) {
+        TypedQuery<DecryptionKey> query = em.createQuery("SELECT dk FROM DecryptionKey dk", DecryptionKey.class);
         query.setFirstResult(toInteger(start));
         query.setMaxResults(toInteger(offset));
         return query.getResultList();
     }
 
     @Override
-    public void remove(User user) {
-        em.remove(user);
+    public void remove(DecryptionKey decryptionKey) {
+        em.remove(decryptionKey);
 
     }
 
     @Override
     public void removeById(UUID id) {
-        User user = this.findOne(id);
-        if (user != null) {
-            em.remove(user);
+        DecryptionKey decryptionKey = this.findOne(id);
+        if (decryptionKey != null) {
+            em.remove(decryptionKey);
         }
     }
 

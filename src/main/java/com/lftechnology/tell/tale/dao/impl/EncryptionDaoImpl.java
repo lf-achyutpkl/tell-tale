@@ -9,8 +9,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import com.lftechnology.tell.tale.dao.UserDao;
-import com.lftechnology.tell.tale.entity.User;
+import com.lftechnology.tell.tale.dao.EncryptionKeyDao;
+import com.lftechnology.tell.tale.entity.EncryptionKey;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -21,13 +21,13 @@ import com.lftechnology.tell.tale.exception.ParameterFormatException;
  */
 
 @Transactional
-public class UserDaoImpl implements UserDao {
+public class EncryptionDaoImpl implements EncryptionKeyDao {
 
     @Inject
     EntityManager em;
 
     @Override
-    public User save(User entity) {
+    public EncryptionKey save(EncryptionKey entity) {
         try {
             em.persist(entity);
             em.flush();
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User update(User entity) {
+    public EncryptionKey update(EncryptionKey entity) {
         try {
             entity = em.merge(entity);
             em.flush();
@@ -51,35 +51,35 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findOne(UUID id) {
-        return em.find(User.class, id);
+    public EncryptionKey findOne(UUID id) {
+        return em.find(EncryptionKey.class, id);
     }
 
     @Override
-    public List<User> findAll() {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
+    public List<EncryptionKey> findAll() {
+        TypedQuery<EncryptionKey> query = em.createQuery("SELECT ek FROM EncryptionKey ek", EncryptionKey.class);
         return query.getResultList();
     }
 
     @Override
-    public List<User> find(String start, String offset) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u ", User.class);
+    public List<EncryptionKey> find(String start, String offset) {
+        TypedQuery<EncryptionKey> query = em.createQuery("SELECT ek FROM EncryptionKey ek", EncryptionKey.class);
         query.setFirstResult(toInteger(start));
         query.setMaxResults(toInteger(offset));
         return query.getResultList();
     }
 
     @Override
-    public void remove(User user) {
-        em.remove(user);
+    public void remove(EncryptionKey encryptionKey) {
+        em.remove(encryptionKey);
 
     }
 
     @Override
     public void removeById(UUID id) {
-        User user = this.findOne(id);
-        if (user != null) {
-            em.remove(user);
+        EncryptionKey encryptionKey = this.findOne(id);
+        if (encryptionKey != null) {
+            em.remove(encryptionKey);
         }
     }
 

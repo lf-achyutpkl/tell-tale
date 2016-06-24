@@ -9,8 +9,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import com.lftechnology.tell.tale.dao.UserDao;
-import com.lftechnology.tell.tale.entity.User;
+import com.lftechnology.tell.tale.dao.SessionDao;
+import com.lftechnology.tell.tale.entity.Session;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -21,13 +21,13 @@ import com.lftechnology.tell.tale.exception.ParameterFormatException;
  */
 
 @Transactional
-public class UserDaoImpl implements UserDao {
+public class SessionDaoImpl implements SessionDao {
 
     @Inject
     EntityManager em;
 
     @Override
-    public User save(User entity) {
+    public Session save(Session entity) {
         try {
             em.persist(entity);
             em.flush();
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User update(User entity) {
+    public Session update(Session entity) {
         try {
             entity = em.merge(entity);
             em.flush();
@@ -51,35 +51,35 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findOne(UUID id) {
-        return em.find(User.class, id);
+    public Session findOne(UUID id) {
+        return em.find(Session.class, id);
     }
 
     @Override
-    public List<User> findAll() {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
+    public List<Session> findAll() {
+        TypedQuery<Session> query = em.createQuery("SELECT s FROM Session s", Session.class);
         return query.getResultList();
     }
 
     @Override
-    public List<User> find(String start, String offset) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u ", User.class);
+    public List<Session> find(String start, String offset) {
+        TypedQuery<Session> query = em.createQuery("SELECT s FROM Session s", Session.class);
         query.setFirstResult(toInteger(start));
         query.setMaxResults(toInteger(offset));
         return query.getResultList();
     }
 
     @Override
-    public void remove(User user) {
-        em.remove(user);
+    public void remove(Session session) {
+        em.remove(session);
 
     }
 
     @Override
     public void removeById(UUID id) {
-        User user = this.findOne(id);
-        if (user != null) {
-            em.remove(user);
+        Session session = this.findOne(id);
+        if (session != null) {
+            em.remove(session);
         }
     }
 
