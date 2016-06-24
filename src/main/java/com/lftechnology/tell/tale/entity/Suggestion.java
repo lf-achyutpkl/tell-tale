@@ -8,6 +8,7 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -55,4 +56,10 @@ public class Suggestion extends AbstractEntity implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
 
+    @PrePersist
+    public void persists(){
+    	this.setCreatedAt(LocalDateTime.now());
+    	this.setSeen(false);
+    	this.setStarred(false);
+    }
 }
