@@ -131,7 +131,7 @@ class LandingPage extends Component {
             </Modal.Header>
             <Modal.Body>
               <div className={this.state.errorFields.userName?"form-group has-error has-feedback":"form-group"}>
-                <label>Username:</label>
+                <label>Email:</label>
                 <input type="text" className="form-control" name="userName" value={this.state.loginFields.userName}
                        onChange={this.handleLoginChange} onBlur={()=>this.isValidFields(this.state.loginFields)}
                        onFocus={this.removeFeedback}/>
@@ -165,7 +165,7 @@ class LandingPage extends Component {
                        onFocus={this.removeFeedback}/>
               </div>
               <div className={this.state.errorFields.userName?"form-group has-error has-feedback":"form-group"}>
-                <label>Username:</label>
+                <label>Email:</label>
                 <input type="text" className="form-control" name="userName" value={this.state.registerFields.userName}
                        onChange={this.handleRegisterChange} onBlur={()=>this.isValidFields(this.state.registerFields)}
                        onFocus={this.removeFeedback}/>
