@@ -1,0 +1,37 @@
+#page-container .container-fluid{
+    margin-top: 50px;
+    padding: 0;
+}
+
+#page-container{
+    width: 100%;
+}
+
+#main-container{
+    width: 100%;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+}
+
+.sidebar li a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+.sidebar li a:hover{
+    background-color: #7fbbda;
+    color: white;
+}
+
+.sidebar ul li a.active {
+    background-color: #eee;
+}
+
