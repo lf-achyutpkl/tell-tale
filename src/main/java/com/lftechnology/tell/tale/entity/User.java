@@ -3,16 +3,18 @@ package com.lftechnology.tell.tale.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-
-import lombok.Getter;
-import lombok.Setter;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 
@@ -23,7 +25,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "users")
 @Setter
 @Getter
+@NamedQueries({
+	@NamedQuery(name=User.GET_USER_FROM_EMAIL_AND_PASSWORD, query="SELECT u FROM User u WHERE u.email = :email AND u.password = :password")})
 public class User extends AbstractEntity implements Serializable {
+	
+    private static final String PREFIX = "tell.tale.user";
+    public static final String GET_USER_FROM_EMAIL_AND_PASSWORD = User.PREFIX + "getUserFromEmailAndPassword";
 
     private static final long serialVersionUID = -515722889297668323L;
 

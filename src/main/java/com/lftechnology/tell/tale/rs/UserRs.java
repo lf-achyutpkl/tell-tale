@@ -37,7 +37,7 @@ public class UserRs {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(@Valid User user) {
-        return Response.status(Response.Status.CREATED).entity(this.userService.save(user)).build();
+        return Response.status(Response.Status.OK).entity(this.userService.save(user)).build();
     }
 
     @Path("/{id}")
@@ -58,6 +58,14 @@ public class UserRs {
     public Response list(@DefaultValue("1") @QueryParam("start") String start, @DefaultValue("10") @QueryParam("offset") String offset) {
         Map<String, Object> users = this.userService.find(start, offset);
         return Response.status(Response.Status.OK).entity(users).build();
+    }
+    
+    @POST
+    @Path("login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(User user) {
+        return Response.status(Response.Status.OK).entity(this.userService.login(user)).build();
     }
 
 }

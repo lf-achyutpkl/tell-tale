@@ -59,7 +59,7 @@ public class EncryptionDecryptionServiceImpl implements EncryptionDecryptionServ
         String decryptedText = null;
         try {
             cipher = Cipher.getInstance(DESEDE_ENCRYPTION_SCHEME);
-            cipher.init(Cipher.DECRYPT_MODE, generateKey(key));
+            cipher.init(Cipher.DECRYPT_MODE, generateKey(formKey(key)));
             BASE64Decoder base64decoder = new BASE64Decoder();
             byte[] encryptedText = base64decoder.decodeBuffer(encryptedString);
             byte[] plainText = cipher.doFinal(encryptedText);

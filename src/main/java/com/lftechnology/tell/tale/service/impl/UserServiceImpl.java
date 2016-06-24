@@ -1,6 +1,9 @@
 package com.lftechnology.tell.tale.service.impl;
 
+import java.security.GeneralSecurityException;
 import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,17 +14,24 @@ import javax.inject.Inject;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.lftechnology.tell.tale.dao.DecryptionKeyDao;
 import com.lftechnology.tell.tale.dao.UserDao;
 import com.lftechnology.tell.tale.entity.DecryptionKey;
 import com.lftechnology.tell.tale.entity.EncryptionKey;
+import com.lftechnology.tell.tale.entity.Session;
+import com.lftechnology.tell.tale.entity.Token;
 import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.EncryptionException;
 import com.lftechnology.tell.tale.exception.ObjectNotFoundException;
+import com.lftechnology.tell.tale.exception.UnauthorizedException;
 import com.lftechnology.tell.tale.service.DecryptionKeyService;
 import com.lftechnology.tell.tale.service.EncryptionDecryptionService;
 import com.lftechnology.tell.tale.service.EncryptionKeyService;
+import com.lftechnology.tell.tale.service.JwtTokenService;
+import com.lftechnology.tell.tale.service.SessionService;
 import com.lftechnology.tell.tale.service.UserService;
 import com.lftechnology.tell.tale.util.KeyPairUtil;
+import com.lftechnology.tell.tale.util.NumberUtil;
 
 /**
  * 
@@ -31,21 +41,32 @@ import com.lftechnology.tell.tale.util.KeyPairUtil;
 @Stateless
 public class UserServiceImpl implements UserService {
 
-    private static final String SALT = "thisissamplesalt";
+	private static final String SALT = "thisissamplesalt";
 
-    @Inject
-    private UserDao userDao;
+	@Inject
+	private UserDao userDao;
 
-     @Inject
-     private EncryptionDecryptionService encryptionDecryptionService;
+	@Inject
+	private DecryptionKeyDao decryptionKeyDao;
 
-    @Inject
-    private DecryptionKeyService decryptionKeyService;
+	@Inject
+	private EncryptionDecryptionService encryptionDecryptionService;
 
-    @Inject
-    private EncryptionKeyService encryptionKeyService;
+	@Inject
+	private SessionService sessionSession;
 
-    @Override
+	@Inject
+	private JwtTokenService jwtTokenService;
+	
+	@Inject
+	private EncryptionKeyService encryptionKeyService;
+	
+	@Inject
+	private DecryptionKeyService decryptionKeyService;
+
+
+
+	@Override
     public User save(User user) {
         String password = user.getPassword();
         String saltedPassword = SALT + password;
@@ -113,4 +134,45 @@ public class UserServiceImpl implements UserService {
     public void removeById(UUID id) {
         this.userDao.removeById(id);
     }
+    
+	@Override
+	public Token login(User userObj) {
+		String password = userObj.getPassword();
+		String saltedPassword = SALT + userObj.getPassword();
+		userObj.setPassword(DigestUtils.shaHex(saltedPassword));
+		User user = userDao.login(userObj);
+		if (user == null) {
+			throw new UnauthorizedException();
+		}
+		String randomText = NumberUtil.getRandom();
+		String encryptedDecryptionKey = decryptionKeyDao.getDecryptionKey(user).getValue();
+		String decryptionKey = encryptionDecryptionService.decrypt(encryptedDecryptionKey, password);
+		String toEncryptKey = "";
+		try {
+			PrivateKey pkey = KeyPairUtil.loadPrivateKey(decryptionKey);
+			toEncryptKey = KeyPairUtil.savePrivateKey(pkey);
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String encryptedPrivateKeyWithRandomText = encryptionDecryptionService.encrypt(toEncryptKey, randomText);
+
+		// save user in session table
+		LocalDateTime expiresAt = LocalDateTime.now().plusMinutes(JwtTokenServiceImpl.TOKEN_EXPIRE_AT);
+		Session session = new Session(user, encryptedPrivateKeyWithRandomText, expiresAt);
+		sessionSession.save(session);
+
+		// generate jwt token for user
+		Map<String, Object> tokenPayload = jwtTokenService.makePayload(user,randomText, JwtTokenServiceImpl.TOKEN_EXPIRE_AT);
+		Token token = new Token();
+		token.setToken(jwtTokenService.payloadToToken(tokenPayload));
+		return token;
+	}
+
+	@Override
+	public void logout(Token token) {
+		// TODO Auto-generated method stub
+
+	}
 }
