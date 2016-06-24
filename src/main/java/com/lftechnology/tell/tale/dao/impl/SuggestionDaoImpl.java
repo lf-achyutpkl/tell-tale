@@ -83,6 +83,13 @@ public class SuggestionDaoImpl implements SuggestionDao {
         }
     }
 
+    @Override
+    public long count() {
+        TypedQuery<Suggestion> query = em.createQuery("Select s from Suggestion u", Suggestion.class);
+        List<Suggestion> suggestions = query.getResultList();
+        return suggestions.size();
+    }
+
     private Integer toInteger(String number) {
         try {
             return Integer.parseInt(number);

@@ -45,11 +45,11 @@ CREATE TABLE decryption_keys(
 	user_id uuid NOT NULL,
 	key text NOT NULL
 );
-ALTER TABLE private_keys OWNER TO postgres;
-ALTER TABLE ONLY private_keys
-	ADD CONSTRAINT private_keys_pkey PRIMARY KEY(id);
-ALTER TABLE ONLY private_keys
-	ADD CONSTRAINT private_keys_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE decryption_keys OWNER TO postgres;
+ALTER TABLE ONLY decryption_keys
+	ADD CONSTRAINT decryption_keys_pkey PRIMARY KEY(id);
+ALTER TABLE ONLY decryption_keys
+	ADD CONSTRAINT decryption_keys_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 CREATE TABLE encryption_keys(
@@ -57,11 +57,11 @@ CREATE TABLE encryption_keys(
 	user_id uuid NOT NULL,
 	key text NOT NULL
 );
-ALTER TABLE public_keys OWNER TO postgres;
-ALTER TABLE ONLY public_keys
-	ADD CONSTRAINT public_keys_pkey PRIMARY KEY(id);
-ALTER TABLE ONLY public_keys
-	ADD CONSTRAINT public_keys_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE encryption_keys OWNER TO postgres;
+ALTER TABLE ONLY encryption_keys
+	ADD CONSTRAINT encryption_keys_pkey PRIMARY KEY(id);
+ALTER TABLE ONLY encryption_keys
+	ADD CONSTRAINT encryption_keys_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 CREATE TABLE sessions(
