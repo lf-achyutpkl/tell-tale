@@ -1,0 +1,34 @@
+#page-container {
+    margin-top: 50px;
+    padding: 0;
+}
+
+.row .sidebar {
+    padding-left: 0px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    width: 100%;
+    background-color: #f1f1f1;
+    margin-bottom: -5000px;
+    padding:0 0 5000px 0;
+    overflow: hidden;
+}
+
+.sidebar li a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+.sidebar li a:hover {
+    background-color: #7fbbda;
+    color: white;
+}
+
+.sidebar ul li a.active {
+    background-color: #eee;
+}
+
