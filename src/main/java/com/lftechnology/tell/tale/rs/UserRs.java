@@ -3,6 +3,7 @@ package com.lftechnology.tell.tale.rs;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -16,7 +17,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.lftechnology.tell.tale.dao.UserDao;
 import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.ObjectNotFoundException;
 import com.lftechnology.tell.tale.service.UserService;
