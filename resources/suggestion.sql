@@ -40,7 +40,7 @@ ALTER TABLE ONLY suggestions
 	ADD CONSTRAINT suggestions_recepient_id_fkey FOREIGN KEY (recepient_id) REFERENCES users(id);
 
 
-CREATE TABLE private_keys(
+CREATE TABLE decryption_keys(
 	id uuid NOT NULL,
 	user_id uuid NOT NULL,
 	key text NOT NULL
@@ -52,7 +52,7 @@ ALTER TABLE ONLY private_keys
 	ADD CONSTRAINT private_keys_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 
 
-CREATE TABLE public_keys(
+CREATE TABLE encryption_keys(
 	id uuid NOT NULL,
 	user_id uuid NOT NULL,
 	key text NOT NULL
@@ -67,7 +67,7 @@ ALTER TABLE ONLY public_keys
 CREATE TABLE sessions(
 	id uuid NOT NULL,
 	user_id uuid NOT NULL,
-	encrypted_private_key text NOT NULL,
+	encrypted_password text NOT NULL,
 	expires_at time with time zone NOT NULL
 );
 ALTER TABLE sessions OWNER TO postgres;
