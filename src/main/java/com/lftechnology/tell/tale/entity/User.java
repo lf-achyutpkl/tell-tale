@@ -43,7 +43,7 @@ public class User extends AbstractEntity implements Serializable {
     private String email;
 
     @NotBlank(message = "Password cannot be blank.")
-    @Size(max = 255)
+    @Size(min = 6)
     private String password;
 
     @JsonIgnore

@@ -4,16 +4,17 @@
  * on 6/24/16.
  */
 
+//React dependencies
 import React from 'react';
 
-class Header extends React.Component {
+class MessageMain extends React.Component {
   render() {
     return (
-      <header id="header" className="navbar navbar-default navbar-fixed-top">
-
-      </header>
+      <div>
+        {this.props.children}
+      </div>
     );
   }
 }
 
-export default Header;
+export default MessageMain;
