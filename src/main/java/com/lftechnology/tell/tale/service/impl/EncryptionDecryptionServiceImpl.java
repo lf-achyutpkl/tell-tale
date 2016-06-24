@@ -38,10 +38,10 @@ public class EncryptionDecryptionServiceImpl implements EncryptionDecryptionServ
 
 	@SuppressWarnings("restriction")
 	@Override
-	public String encrypt(String unencryptedString) {
+	public String encrypt(String unencryptedString, String key) {
 		String encryptedString = null;
 		try {
-			cipher.init(Cipher.ENCRYPT_MODE, generateKey());
+			cipher.init(Cipher.ENCRYPT_MODE, generateKey(key));
 			byte[] plainText = unencryptedString.getBytes(UNICODE_FORMAT);
 			byte[] encryptedText = cipher.doFinal(plainText);
 			BASE64Encoder base64encoder = new BASE64Encoder();
@@ -53,10 +53,10 @@ public class EncryptionDecryptionServiceImpl implements EncryptionDecryptionServ
 	}
 
 	@Override
-	public String decrypt(String encryptedString) {
+	public String decrypt(String encryptedString, String key) {
 		String decryptedText = null;
 		try {
-			cipher.init(Cipher.DECRYPT_MODE, generateKey());
+			cipher.init(Cipher.DECRYPT_MODE, generateKey(key));
 			BASE64Decoder base64decoder = new BASE64Decoder();
 			byte[] encryptedText = base64decoder.decodeBuffer(encryptedString);
 			byte[] plainText = cipher.doFinal(encryptedText);
@@ -67,9 +67,9 @@ public class EncryptionDecryptionServiceImpl implements EncryptionDecryptionServ
 		return decryptedText;
 	}
 
-	private SecretKey generateKey() {
+	private SecretKey generateKey(String key) {
 		try {
-			keyAsBytes = ALGORITHM_KEY.getBytes(UNICODE_FORMAT);
+			keyAsBytes = key.getBytes(UNICODE_FORMAT);
 			keySpec = new DESedeKeySpec(keyAsBytes);
 			mySecretKeyFactory = SecretKeyFactory.getInstance(DESEDE_ENCRYPTION_SCHEME);
 			return mySecretKeyFactory.generateSecret(keySpec);

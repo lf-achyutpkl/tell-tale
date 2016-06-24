@@ -7,7 +7,7 @@ package com.lftechnology.tell.tale.service;
  */
 public interface EncryptionDecryptionService {
 	
-	public String encrypt(String unencryptedString);
+	public String encrypt(String unencryptedString, String key);
 	
-	public String decrypt(String encryptedString);
+	public String decrypt(String encryptedString, String key);
 }
