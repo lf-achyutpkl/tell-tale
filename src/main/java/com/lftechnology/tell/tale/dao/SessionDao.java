@@ -27,4 +27,6 @@ public interface SessionDao {
     public void removeById(UUID id);
     
 	public void logout(User user);
+	
+	public Session findSession(User user);
 }

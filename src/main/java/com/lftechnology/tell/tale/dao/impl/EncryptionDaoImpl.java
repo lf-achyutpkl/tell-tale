@@ -5,12 +5,16 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 
 import com.lftechnology.tell.tale.dao.EncryptionKeyDao;
 import com.lftechnology.tell.tale.entity.EncryptionKey;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -90,4 +94,13 @@ public class EncryptionDaoImpl implements EncryptionKeyDao {
             throw new ParameterFormatException("Pagination query accepts only number value.");
         }
     }
+
+	@Override
+	public EncryptionKey getEncryptionKey(User user) {
+		try{
+			return em.createQuery("select e from EncryptionKey e where e.user = :user", EncryptionKey.class).setParameter("user", user).getSingleResult();
+		}catch(NoResultException | NonUniqueResultException e){
+			throw new DataAccessException("No key found for this user");
+		}
+	}
 }

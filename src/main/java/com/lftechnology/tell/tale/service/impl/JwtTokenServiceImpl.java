@@ -28,7 +28,7 @@ import com.lftechnology.tell.tale.service.JwtTokenService;
 @Stateless
 public class JwtTokenServiceImpl implements JwtTokenService{
 	
-	public static final Integer TOKEN_EXPIRE_AT = 10;
+	public static final Integer TOKEN_EXPIRE_AT = 45;
     private static final String APP_SECRET_KEY = "telltale";
     private static final String AUDIENCE = "1";
 

@@ -43,4 +43,9 @@ public class SessionServiceImpl implements SessionService{
 		sessionDao.logout(user);
 	}
 
+	@Override
+	public Session findSession(User user) {
+		return sessionDao.findSession(user);
+	}
+
 }
