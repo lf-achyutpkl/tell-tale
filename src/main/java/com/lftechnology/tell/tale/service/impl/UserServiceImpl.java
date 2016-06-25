@@ -177,4 +177,9 @@ public class UserServiceImpl implements UserService {
 	public void logout(User user) {
 		sessionService.logout(user);
 	}
+
+    @Override
+    public List<User> search(String search) {
+        return this.userDao.search(search);
+    }
 }
