@@ -6,13 +6,34 @@
 
 //React dependencies
 import React from 'react';
+import {Modal} from 'react-bootstrap';
 
 class SuggestionRow extends React.Component {
-  
+
+  constructor(props) {
+    super(props);
+    this.displayFullSuggestion = this.displayFullSuggestion.bind(this);
+    this.close = this.close.bind(this);
+    this.state = {
+      isShowModal: false,
+      suggestion: {suggestion: '',label: '', createdAt: ''}
+    }
+  }
+
+  displayFullSuggestion(suggestion) {
+    console.log('suggestion', suggestion);
+    this.setState({isShowModal: true});
+    this.setState({suggestion: suggestion});
+  }
+
+  close() {
+    this.setState({isShowModal: false});
+  }
+
   render() {
     let isStarred = this.props.suggestion.starred;
     let fullMessage = this.props.suggestion.suggestion;
-    let shortMessage = fullMessage.substr(0,100);
+    let shortMessage = fullMessage.substr(0, 100);
     let starStyle = isStarred ? {color: '#f0ad4e'} : {color: '#ccc'};
     return (
       <tr>
@@ -28,7 +49,7 @@ class SuggestionRow extends React.Component {
         </td>
         <td>
           <span style={starStyle} onClick={() => {
-            this.props.displayFullSuggestion(this.props.suggestion);
+            this.displayFullSuggestion(this.props.suggestion);
           }}>
             <p className="suggestion-text">{shortMessage}</p>
           </span>
@@ -40,6 +61,18 @@ class SuggestionRow extends React.Component {
           <span className="date pull-right">{this.props.suggestion.createdAt}</span>
         </td>
 
+        <td>
+          <Modal show={this.state.isShowModal} onHide={this.close}>
+            <Modal.Header closeButton>
+              <Modal.Title>Suggestion</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>{this.state.suggestion.suggestion}</p>
+              <span className="label label-warning pull-left">{this.state.suggestion.label}</span>
+              <span>Created At {this.state.suggestion.createdAt}</span>
+            </Modal.Body>
+          </Modal>
+        </td>
       </tr>
     );
   }

@@ -5,10 +5,11 @@
  */
 
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {Modal, Button, FormControl} from 'react-bootstrap';
+import Select from 'react-select';
+import Toastr from 'toastr';
 
-import apiActions from '../../actions/apiActions';
+import TellTaleService from '../../services/TellTaleService';
 
 class SuggestionSend extends Component {
 
@@ -16,17 +17,13 @@ class SuggestionSend extends Component {
     super(props);
 
     this.isValidFields = this.isValidFields.bind(this);
+    this.saveSuggestion = this.saveSuggestion.bind(this);
     this.removeFeedback = this.removeFeedback.bind(this);
     this.handleMessageFieldChange = this.handleMessageFieldChange.bind(this);
 
     this.state = {
-      messageFields: {receiver: '', label: '', messageBody: ''},
-      errorFields: {receiver: false, label: false, messageBody: false}
+      errorFields: {receiver: false, label: false, suggestion: false}
     };
-  }
-
-  componentWillUnmount() {
-    this.props.actions.apiClearState();
   }
 
   isValidFields(field) {
@@ -53,35 +50,114 @@ class SuggestionSend extends Component {
     this.setState({messageFields: this.state.messageFields});
   }
 
+  mapUsersToLabelAndValue(users) {
+    let selectedUsers = [];
+    for (let userObj of users) {
+      selectedUsers.push({label: userObj.name, value: userObj.id})
+    }
+    return selectedUsers;
+  }
+
+  getSelectOptions(input) {
+    return (TellTaleService.fetch('users', 'users').then((response) => {
+      let options = [];
+      for (let responseData of response.data) {
+        options.push({
+          value: responseData.id,
+          label: responseData.name
+        });
+      }
+      debugger;
+      return {options: options};
+    }).catch((error) => {
+      return {}
+    }));
+  }
+
+  validateFields() {
+    let requiredFields = {
+      receiver: this.refs.receiverEmail.props.value.value,
+      label: this.refs.label.props.value.value,
+      suggestion: this.refs.suggestion.value
+    };
+    for (let key in requiredFields) {
+      if (requiredFields[key] == '' || requiredFields[key] == null) {
+        this.state.errorFields[key] = true;
+        this.setState({errorFields: this.state.errorFields});
+        return false;
+      }
+    }
+    return true;
+  }
+
+  saveSuggestion() {
+    if (this.validateFields()) {
+      //save suggestion and if success ->
+      this.props.onHide();
+    } else {
+      Toastr.error('Enter data in all fields');
+    }
+  }
+
+  handleChange(event) {
+  }
+
   render() {
     return (
-      <div>
-        <form className="form-horizontal" role="form" method="post" action="">
-          <fieldset disabled={this.props.apiState.isRequesting}>
-            <div className={this.state.errorFields.receiver?"form-group has-error has-feedback":"form-group"}>
-              <label className="col-md-6">To:</label>
-              <input type="text" className="form-control col-md-6" name="receiver" value={this.state.messageFields.receiver}
-                     onChange={this.handleMessageFieldChange} onBlur={()=>this.isValidFields(this.state.messageFields)}
-                     onFocus={this.removeFeedback}/>
+      <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-lg">Send Suggestion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row clearfix">
+            <div className="col-md-2">
+              <span className="">To</span>
             </div>
-          </fieldset>
-        </form>
-      </div>
-    )
+            <div className="col-md-10 form-group">
+              <Select.Async
+                name="receiverEmail"
+                ref="receiverEmail"
+                value=""
+                loadOptions={this.getSelectOptions}
+                placeholder="ReceiverEmail"
+                multi={false}
+              />
+              <span className="help-block"></span>
+            </div>
+          </div>
+          <div className="row clearfix">
+            <div className="col-md-2">
+              <span className="">Label</span>
+            </div>
+            <div className="col-md-10 form-group">
+              <Select.Async
+                name="label"
+                ref="label"
+                value={{value:'123',label:'Android'}}
+                loadOptions={this.getSelectOptions}
+                placeholder="Label"
+                multi={false}
+              />
+              <span className="help-block"></span>
+            </div>
+          </div>
+          <div className="row clearfix">
+            <div className="col-md-12">
+              <span className="">Suggestion</span>
+            </div>
+            <div className="col-md-12 form-group">
+              <textarea rows="5" className="form-control" maxlength="500" ref="suggestion"
+                        placeholder="Type your suggestion"></textarea>
+              <span className="help-block pull-right">*500 Characters Only</span>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.saveSuggestion}>Send</Button>
+          <Button onClick={this.props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
   }
 }
-
-let mapStateToProps = (state)=> {
-  return {
-    apiState: state.apiReducer
-  }
-};
-
-let mapDispatchToProps = (dispatch)=> {
-  return {
-    actions: bindActionCreators(_.assign({}, apiActions), dispatch)
-  }
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(SuggestionSend);
+export default SuggestionSend

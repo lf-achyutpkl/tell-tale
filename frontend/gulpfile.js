@@ -43,9 +43,11 @@
           './src/css/forms.css',
           './src/css/fontface.css',
           './src/css/custom.css',
+          'node_modules/react-select/dist/react-select.css',
           'node_modules/toastr/build/toastr.css',
           'node_modules/jquery-confirm/dist/jquery-confirm.min.css',
-          './src/css/main.css',
+          './src/css/page-not-found.css',
+          './src/css/main.css'
         ],
         img: ['./src/img/*', './src/img/**/*'],
         fonts: './src/css/fonts/*',
@@ -144,7 +146,7 @@
       .pipe(iconfont({
         fontName: 'myfont',
         prependUnicode: true,
-        formats: ['ttf', 'eot'] 
+        formats: ['ttf', 'eot']
       }))
       .pipe(gulp.dest(config.paths.dist.fonts));
   });

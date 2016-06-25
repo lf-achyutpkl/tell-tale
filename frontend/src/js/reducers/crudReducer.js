@@ -11,7 +11,8 @@ import actionTypeConstants from '../constants/actionTypeConstants';
 import _ from 'lodash';
 
 const initialState = {
-  suggestions: []
+  suggestions: [],
+  users: []
 };
 
 let crudReducer = function (state = initialState, action) {

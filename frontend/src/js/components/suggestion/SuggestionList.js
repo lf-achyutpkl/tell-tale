@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import SuggestionRow from './SuggestionRow';
+import SuggestionSend from './SuggestionSend';
 
 import crudActions from '../../actions/crudActions';
 import apiActions from '../../actions/apiActions';
@@ -20,10 +21,15 @@ class SuggestionList extends React.Component {
     super(props);
     this.renderSuggestion = this.renderSuggestion.bind(this);
     this.starSuggestion = this.starSuggestion.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.state = {
+      show: false
+    }
   }
 
   componentWillMount() {
     this.props.actions.fetch('suggestions', 'suggestions');
+    this.props.actions.fetch('users', 'users');
   }
 
   starSuggestion(suggestion) {
@@ -34,6 +40,10 @@ class SuggestionList extends React.Component {
       suggestion.starred = true;
       this.props.actions.updateItem('suggestions', suggestion, suggestion.id);
     }
+  }
+
+  closeModal(event) {
+    this.setState({show: false})
   }
 
   renderSuggestion(key) {
@@ -51,6 +61,9 @@ class SuggestionList extends React.Component {
   render() {
     return (
       <div>
+        <a title="Send Suggestion" className="btn btn-sm btn-primary text-uppercase pull-right"
+           onClick={()=>this.setState({show:true})}><i
+          className="fa fa-plus"></i>Send Suggestion</a>
         <div>
           <h2>Suggestions</h2>
         </div>
@@ -61,6 +74,7 @@ class SuggestionList extends React.Component {
             </tbody>
           </table>
         </div>
+        <SuggestionSend show={this.state.show} users={this.props.users} onHide={this.closeModal}/>
       </div>
     )
   }
@@ -69,6 +83,7 @@ class SuggestionList extends React.Component {
 let mapStateToProps = function (state) {
   return {
     suggestions: state.crudReducer.suggestions,
+    users:state.crudReducer.users,
     apiState: state.apiReducer
   }
 };

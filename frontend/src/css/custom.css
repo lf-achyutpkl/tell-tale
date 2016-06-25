@@ -8,15 +8,23 @@
     position: absolute;
 }
 
+.modal-body .col-md-2{
+    margin-top:10px
+}
+
+.Select-clear-zone {
+    display: none;
+}
+
+.Select-clear {
+    display: none;
+}
+
 /*End of Modal*/
 
 /*Tools*/
 .user a.btn {
     float: right;
-}
-
-.navbar .btn.btn-sm.btn-primary {
-    margin: 10px 10px 0 0;
 }
 
 /*End of Tools*/

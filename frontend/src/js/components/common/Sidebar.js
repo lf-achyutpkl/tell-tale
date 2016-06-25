@@ -14,10 +14,6 @@ class Sidebar extends React.Component {
         <ul>
           <li><a href="/suggestions">All Messages</a></li>
           <li><a href="#">Starred Messages</a></li>
-          <li><a href="#">All Messages</a></li>
-          <li><a href="#">Starred Messages</a></li>
-          <li><a href="#">All Messages</a></li>
-          <li><a href="#">Starred Messages</a></li>
         </ul>
       </div>
     )

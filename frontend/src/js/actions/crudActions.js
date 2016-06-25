@@ -46,7 +46,7 @@ let crudActions = {
           dispatch(actions.list(entity, response));
         })
         .catch((error)=> {
-          Toastr.success('Error has occurred, Please Try again');
+          Toastr.error('Error has occurred, Please Try again');
         }))
     }
   },

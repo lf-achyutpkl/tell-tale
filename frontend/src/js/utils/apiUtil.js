@@ -40,18 +40,18 @@ let suggestions = [
 let apiUtil = {
   fetch(url, pathParam, queryParams){
     return new Promise((resolve, reject)=> {
-      let response = { data : suggestions };
-      resolve(response);
-      // request
-      //   .get(url + pathParam + queryParams)
-      //   .end((err, res)=> {
-      //     if (err || !res) {
-      //       reject(err);
-      //     }
-      //     else {
-      //       resolve(res.body);
-      //     }
-      //   })
+      request
+        .get(url + pathParam + queryParams)
+        .set('Authorization', 'Bearer' + ' ' + sessionStorage.getItem('tellTaleAuth'))
+        .set('Accept', 'application/json')
+        .end((err, res)=> {
+          if (err || !res) {
+            reject(err);
+          }
+          else {
+            resolve(res.body);
+          }
+        })
     });
   },
   register(url, data){
@@ -78,11 +78,9 @@ let apiUtil = {
         .set('Accept', 'application/json')
         .end((err, res)=> {
           if (err || !res) {
-            console.log(err, 'err');
             reject(err);
           }
           else {
-            console.log(res, 'res');
             resolve(res.body);
           }
         })
@@ -91,28 +89,19 @@ let apiUtil = {
 
   edit(url, pathParam, data) {
     return new Promise((resolve, reject)=> {
-      console.log('url',url);
-      console.log('pathParam', pathParam);
-      let response = { data : suggestions };
-      response.data.forEach((value,index) => {
-        if(value.id == data.id){
-          response.data[index] = data;
-          console.log('updated')
-          debugger;
-        }
-      });
       resolve(response);
-      // request
-      //   .put(url + pathParam)
-      //   .send(data)
-      //   .set('Accept', 'application/json')
-      //   .end((err, res)=> {
-      //     if (err || !res) {
-      //       reject(err);
-      //     } else {
-      //       resolve(res);
-      //     }
-      //   })
+      request
+        .put(url + pathParam)
+        .send(data)
+        .set('Authorization', 'Bearer' + ' ' + sessionStorage.getItem('tellTaleAuth'))
+        .set('Accept', 'application/json')
+        .end((err, res)=> {
+          if (err || !res) {
+            reject(err);
+          } else {
+            resolve(res);
+          }
+        })
     });
   }
 
