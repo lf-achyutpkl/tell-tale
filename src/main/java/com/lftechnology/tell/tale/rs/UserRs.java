@@ -19,6 +19,8 @@ import javax.ws.rs.core.Response;
 
 import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.ObjectNotFoundException;
+import com.lftechnology.tell.tale.exception.UnauthorizedException;
+import com.lftechnology.tell.tale.pojo.SecurityRequestContext;
 import com.lftechnology.tell.tale.service.UserService;
 
 /**
@@ -67,5 +69,20 @@ public class UserRs {
     public Response login(User user) {
         return Response.status(Response.Status.OK).entity(this.userService.login(user)).build();
     }
+    
+    @POST
+    @Path("logout")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("Admin")
+    public Response logout(){
+    	User user = SecurityRequestContext.getCurrentUser();
+    	if(user == null){
+    		throw new UnauthorizedException();
+    	}
+    	userService.logout(user);
+    	return Response.status(Response.Status.OK).build();
+    }
+    
 
 }

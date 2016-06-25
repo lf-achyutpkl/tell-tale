@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 	private EncryptionDecryptionService encryptionDecryptionService;
 
 	@Inject
-	private SessionService sessionSession;
+	private SessionService sessionService;
 
 	@Inject
 	private JwtTokenService jwtTokenService;
@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
 		// save user in session table
 		LocalDateTime expiresAt = LocalDateTime.now().plusMinutes(JwtTokenServiceImpl.TOKEN_EXPIRE_AT);
 		Session session = new Session(user, encryptedPrivateKeyWithRandomText, expiresAt);
-		sessionSession.save(session);
+		sessionService.save(session);
 
 		// generate jwt token for user
 		Map<String, Object> tokenPayload = jwtTokenService.makePayload(user,randomText, JwtTokenServiceImpl.TOKEN_EXPIRE_AT);
@@ -174,8 +174,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void logout(Token token) {
-		// TODO Auto-generated method stub
-
+	public void logout(User user) {
+		sessionService.logout(user);
 	}
 }

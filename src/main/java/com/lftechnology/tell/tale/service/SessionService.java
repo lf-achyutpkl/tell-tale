@@ -3,6 +3,7 @@ package com.lftechnology.tell.tale.service;
 import java.util.UUID;
 
 import com.lftechnology.tell.tale.entity.Session;
+import com.lftechnology.tell.tale.entity.User;
 
 /**
  * 
@@ -16,4 +17,6 @@ public interface SessionService {
     public void remove(Session session);
 
     public void removeById(UUID id);
+    
+    public void logout(User user);
 }

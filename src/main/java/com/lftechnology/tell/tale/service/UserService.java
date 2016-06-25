@@ -30,5 +30,5 @@ public interface UserService {
     
 	public Token login(User userObj);
 	
-	public void logout(Token token);
+	public void logout(User user);
 }

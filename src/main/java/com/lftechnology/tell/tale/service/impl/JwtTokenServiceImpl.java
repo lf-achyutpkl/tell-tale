@@ -10,6 +10,8 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ejb.Stateless;
+
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
@@ -23,6 +25,7 @@ import com.lftechnology.tell.tale.service.JwtTokenService;
  * Jun 24, 2016
  * 
  */
+@Stateless
 public class JwtTokenServiceImpl implements JwtTokenService{
 	
 	public static final Integer TOKEN_EXPIRE_AT = 10;
