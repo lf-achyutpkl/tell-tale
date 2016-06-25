@@ -5,62 +5,46 @@
  */
 
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import SuggestionRow from './SuggestionRow';
 
-let suggestions = [
-  {
-    Id: 'uuid',
-    Suggestion: 'Bootstrap requires a containing element to wrap site contents and house our grid system. You may choose one of two containers to use in your projects. Note that, due to padding and more, neither container is nestable.',
-    Label: 'text',
-    Recipient: 'uuid',
-    Seen: false,
-    Starred: false,
-    createdAt: ' 06/13/2016'
-  },
-  {
-    Id: 'uuid',
-    Suggestion: 'Bootstrap requires a containing element to wrap site contents and house our grid system. You may choose one of two containers to use in your projects. Note that, due to padding and more, neither container is nestable.',
-    Label: 'text',
-    Recipient: 'uuid',
-    Seen: false,
-    Starred: true,
-    createdAt: '06/13/2016'
-  },
-  {
-    Id: 'uuid',
-    Suggestion: 'Bootstrap requires a containing element to wrap site contents and house our grid system. You may choose one of two containers to use in your projects. Note that, due to padding and more, neither container is nestable.',
-    Label: 'text',
-    Recipient: 'uuid',
-    Seen: false,
-    Starred: false,
-    createdAt: '06/13/2016'
-  }
-];
+import crudActions from '../../actions/crudActions';
+import apiActions from '../../actions/apiActions';
 
 
 class SuggestionList extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.renderSuggestion = this.renderSuggestion.bind(this);
     this.starSuggestion = this.starSuggestion.bind(this);
   }
 
+  componentWillMount() {
+    this.props.actions.fetch('suggestions', 'suggestions');
+  }
+
   starSuggestion(suggestion) {
-    console.log('suggestion',suggestion);
-    if(suggestion.Starred){
+    if (suggestion.starred) {
+      suggestion.starred = false;
+      this.props.actions.updateItem('suggestions', suggestion, suggestion.id);
+    } else if (!suggestion.starred) {
+      suggestion.starred = true;
+      this.props.actions.updateItem('suggestions', suggestion, suggestion.id);
     }
   }
 
   renderSuggestion(key) {
     let index = parseInt(key) + 1;
-    return(
+    return (
       <SuggestionRow index={index}
                      key={key}
-                     id={suggestions[key].Id}
-                     suggestion={suggestions[key]}
-                     starSuggestion={this.starSuggestion} />
+                     id={this.props.suggestions[key].id}
+                     suggestion={this.props.suggestions[key]}
+                     starSuggestion={this.starSuggestion}
+      />
     )
   }
 
@@ -73,7 +57,7 @@ class SuggestionList extends React.Component {
         <div className="table-container">
           <table className="table table-suggestions">
             <tbody>
-            {Object.keys(suggestions).map(this.renderSuggestion)}
+            {Object.keys(this.props.suggestions).map(this.renderSuggestion)}
             </tbody>
           </table>
         </div>
@@ -82,4 +66,18 @@ class SuggestionList extends React.Component {
   }
 }
 
-export default SuggestionList;
+let mapStateToProps = function (state) {
+  return {
+    suggestions: state.crudReducer.suggestions,
+    apiState: state.apiReducer
+  }
+};
+
+let mapDispatchToProps = function (dispatch) {
+  return {
+    actions: bindActionCreators(_.assign({}, crudActions, apiActions), dispatch)
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SuggestionList);
+

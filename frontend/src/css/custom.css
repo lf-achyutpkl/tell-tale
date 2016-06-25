@@ -1,6 +1,6 @@
 /*Modal*/
 .modal-container {
-    clear:both
+    clear: both;
     position: relative;
 }
 
@@ -13,6 +13,10 @@
 /*Tools*/
 .user a.btn {
     float: right;
+}
+
+.navbar .btn.btn-sm.btn-primary {
+    margin: 10px 10px 0 0;
 }
 
 /*End of Tools*/

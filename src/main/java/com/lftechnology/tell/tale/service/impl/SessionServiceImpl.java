@@ -2,10 +2,12 @@ package com.lftechnology.tell.tale.service.impl;
 
 import java.util.UUID;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.lftechnology.tell.tale.dao.SessionDao;
 import com.lftechnology.tell.tale.entity.Session;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.service.SessionService;
 
 /**
@@ -13,6 +15,7 @@ import com.lftechnology.tell.tale.service.SessionService;
  * Jun 25, 2016
  * 
  */
+@Stateless
 public class SessionServiceImpl implements SessionService{
 
 	@Inject
@@ -33,6 +36,11 @@ public class SessionServiceImpl implements SessionService{
 	public void removeById(UUID id) {
 		sessionDao.removeById(id);
 		
+	}
+
+	@Override
+	public void logout(User user) {
+		sessionDao.logout(user);
 	}
 
 }

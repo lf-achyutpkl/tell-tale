@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import com.lftechnology.tell.tale.dao.SessionDao;
 import com.lftechnology.tell.tale.entity.Session;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -90,4 +91,9 @@ public class SessionDaoImpl implements SessionDao {
             throw new ParameterFormatException("Pagination query accepts only number value.");
         }
     }
+
+	@Override
+	public void logout(User user) {
+		em.createNamedQuery(Session.LOGOUT).setParameter("user", user).executeUpdate();
+	}
 }

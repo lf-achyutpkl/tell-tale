@@ -110,10 +110,4 @@ public class UserDaoImpl implements UserDao {
 			throw new UnauthorizedException();
 		}
 	}
-
-	@Override
-	public void logout(Token token) {
-		// TODO Auto-generated method stub
-		
-	}
 }

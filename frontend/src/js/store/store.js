@@ -3,9 +3,13 @@ import thunk from 'redux-thunk';
 import {routerReducer} from 'react-router-redux';
 
 //Reducers
+import apiReducer from '../reducers/apiReducer';
+import crudReducer from '../reducers/crudReducer';
 
 let reducers = combineReducers({
-  routing: routerReducer
+  apiReducer: apiReducer,
+  routing: routerReducer,
+  crudReducer: crudReducer
 });
 
 let store = createStore(reducers, compose(
