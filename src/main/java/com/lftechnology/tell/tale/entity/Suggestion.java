@@ -2,10 +2,12 @@ package com.lftechnology.tell.tale.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -16,6 +18,7 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -33,9 +36,13 @@ import com.lftechnology.tell.tale.util.LocalDateTimeSerializer;
 @Table(name = "suggestions")
 @Getter
 @Setter
-public class Suggestion extends AbstractEntity implements Serializable {
+public class Suggestion implements Serializable {
 
     private static final long serialVersionUID = -515722889297668323L;
+    
+    @Id
+    @Type(type = "pg-uuid")
+    protected UUID id;
 
     @NotBlank(message = "Message cannot be blank.")
     @Size(max = 500)
@@ -43,11 +50,12 @@ public class Suggestion extends AbstractEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "recepient_id", referencedColumnName = "id")
-    @NotNull(message = "Recepient cannot be null")
     private User recepient;
 
+    @Column(name="is_seen")
     private boolean seen;
 
+    @Column(name="is_starred")
     private boolean starred;
 
     @Column(name = "created_at", columnDefinition = "uuid")
@@ -61,5 +69,7 @@ public class Suggestion extends AbstractEntity implements Serializable {
     	this.setCreatedAt(LocalDateTime.now());
     	this.setSeen(false);
     	this.setStarred(false);
+    	this.setId(UUID.randomUUID());
     }
+    
 }

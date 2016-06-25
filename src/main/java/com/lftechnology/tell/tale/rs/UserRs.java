@@ -1,5 +1,6 @@
 package com.lftechnology.tell.tale.rs;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -84,5 +85,12 @@ public class UserRs {
     	return Response.status(Response.Status.OK).build();
     }
     
+    @Path("/search")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response search(@DefaultValue("name") @QueryParam("q") String search) {
+        List<User> users = this.userService.search(search);
+        return Response.status(Response.Status.OK).entity(users).build();
+    }
 
 }

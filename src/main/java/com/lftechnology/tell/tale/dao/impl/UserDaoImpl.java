@@ -110,4 +110,9 @@ public class UserDaoImpl implements UserDao {
 			throw new UnauthorizedException();
 		}
 	}
+	
+    @Override
+    public List<User> search(String search) {
+        return em.createQuery("Select u from User u where LOWER(u.name) like :search",User.class).setParameter("search","%" + search +"%").getResultList();
+    }
 }

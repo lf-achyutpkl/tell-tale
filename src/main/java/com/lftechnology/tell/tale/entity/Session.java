@@ -31,12 +31,14 @@ import com.lftechnology.tell.tale.util.LocalDateTimeSerializer;
 @Getter
 @Setter
 @NamedQueries({
-	@NamedQuery(name=Session.LOGOUT, query="DELETE FROM Session s WHERE s.user = :user")})
+	@NamedQuery(name=Session.LOGOUT, query="DELETE FROM Session s WHERE s.user = :user"),
+	@NamedQuery(name=Session.FIND_SESSION, query="SELECT s FROM Session s WHERE s.user = :user")})
 public class Session extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -515722889297668323L;
     private static final String PREFIX = "tell.tale.session";
     public static final String LOGOUT =PREFIX + "logout";
+    public static final String FIND_SESSION =PREFIX + "findSession";
 
     
     public Session(User user,String encryptedPrivateKey, LocalDateTime expiresAt) {
@@ -44,6 +46,9 @@ public class Session extends AbstractEntity implements Serializable {
     	this.encryptedPrivateKey = encryptedPrivateKey;
     	this.expiresAt = expiresAt;
     }
+    
+    public Session() {
+	}
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
