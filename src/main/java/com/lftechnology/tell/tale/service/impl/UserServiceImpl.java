@@ -137,6 +137,9 @@ public class UserServiceImpl implements UserService {
     
 	@Override
 	public Token login(User userObj) {
+	    if(userObj.getEmail() == null || userObj.getPassword() == null){
+	        throw new UnauthorizedException();
+	    }
 		String password = userObj.getPassword();
 		String saltedPassword = SALT + userObj.getPassword();
 		userObj.setPassword(DigestUtils.shaHex(saltedPassword));

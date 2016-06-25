@@ -12,9 +12,9 @@ import SuggestionList from './components/suggestion/SuggestionList';
 import SuggestionSend from './components/suggestion/SuggestionSend';
 
 const checkAuthentication = (nextState, transition) => {
-  if (!sessionStorage.tellTaleAuth) {
-    transition('/tell-tale');
-  }
+  // if (!sessionStorage.tellTaleAuth) {
+  //   transition('/tell-tale');
+  // }
 };
 
 const checkSession = (nextState, transition) => {
