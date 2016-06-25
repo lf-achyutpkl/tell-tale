@@ -6,13 +6,17 @@
 
 import React, {Component} from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import Toastr from 'toastr';
 
-class LandingPage extends Component {
+import TellTaleService from '../../services/TellTaleService';
+
+class LoginRegisterPage extends Component {
 
   constructor() {
     super();
     this.renderLoginModal = this.renderLoginModal.bind(this);
     this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
     this.handleLoginChange = this.handleLoginChange.bind(this);
     this.handleRegisterChange = this.handleRegisterChange.bind(this);
     this.isValidFields = this.isValidFields.bind(this);
@@ -58,15 +62,13 @@ class LandingPage extends Component {
 
   handleLoginChange(event) {
     let key = event.target.name;
-    let value = event.target.value;
-    this.state.loginFields[key] = value;
+    this.state.loginFields[key] = event.target.value;
     this.setState({loginFields: this.state.loginFields});
   }
 
   handleRegisterChange(event) {
     let key = event.target.name;
-    let value = event.target.value;
-    this.state.registerFields[key] = value;
+    this.state.registerFields[key] = event.target.value;
     this.setState({registerFields: this.state.registerFields});
   }
 
@@ -74,10 +76,18 @@ class LandingPage extends Component {
     event.preventDefault();
 
     if (this.isValidFields(this.state.loginFields)) {
-      //call the api and set the session storage
-      console.log('successfully logged in');
-      sessionStorage.telltaleAuth = 'telltaleauth';
-      location.href = '/';
+      const userData = {email: this.state.loginFields.userName, password: this.state.loginFields.password};
+      TellTaleService.login(userData).then(
+        response => {
+          sessionStorage.tellTaleAuth = response.token;
+          location.href = '/';
+        })
+        .catch(error=> {
+          Toastr.error('Incorrect username or password, Please try again');
+          this.state.errorFields.userName = true;
+          this.state.errorFields.password = true;
+          this.setState({errorFields: this.state.errorFields});
+        });
     }
   }
 
@@ -85,8 +95,19 @@ class LandingPage extends Component {
     event.preventDefault();
 
     if (this.isValidFields(this.state.registerFields)) {
-      //call the api to add user
-      console.log('successfully registered');
+      let userData = {
+        name: this.state.registerFields.fullName,
+        email: this.state.registerFields.userName,
+        password: this.state.registerFields.password
+      };
+      TellTaleService.register(userData).then(
+        ()=> {
+          Toastr.success('Congratulation! You have been successfully registered');
+          this.setState({showRegister: false});
+        })
+        .catch(()=> {
+          Toastr.error('Error while registering, Please try again');
+        });
     }
   }
 
@@ -189,4 +210,4 @@ class LandingPage extends Component {
   }
 }
 
-export default LandingPage;
+export default LoginRegisterPage;

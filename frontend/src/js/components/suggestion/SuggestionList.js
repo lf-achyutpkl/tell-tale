@@ -9,7 +9,7 @@ import React from 'react';
 import EntityHeader from '../common/EntityHeader';
 
 class MessageList extends React.Component {
-  
+
   render() {
     return (
       <div>
