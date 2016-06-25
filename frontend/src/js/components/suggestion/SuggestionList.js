@@ -24,7 +24,7 @@ let suggestions = [
     Label: 'text',
     Recipient: 'uuid',
     Seen: false,
-    Starred: false,
+    Starred: true,
     createdAt: '06/13/2016'
   },
   {
@@ -41,10 +41,26 @@ let suggestions = [
 
 class SuggestionList extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.renderSuggestion = this.renderSuggestion.bind(this);
+    this.starSuggestion = this.starSuggestion.bind(this);
+  }
+
+  starSuggestion(suggestion) {
+    console.log('suggestion',suggestion);
+    if(suggestion.Starred){
+    }
+  }
+
   renderSuggestion(key) {
     let index = parseInt(key) + 1;
     return(
-      <SuggestionRow index={index} key={key} suggestion={suggestions[key]} />
+      <SuggestionRow index={index}
+                     key={key}
+                     id={suggestions[key].Id}
+                     suggestion={suggestions[key]}
+                     starSuggestion={this.starSuggestion} />
     )
   }
 

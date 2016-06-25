@@ -9,20 +9,24 @@ import React from 'react';
 
 class SuggestionRow extends React.Component {
   render() {
+    let isStarred = this.props.suggestion.Starred;
+    let starStyle = isStarred ? { color : '#f0ad4e' } : { color : '#ccc'};
     return (
       <tr>
         <td>
           {this.props.index}
         </td>
         <td>
-          <a href="" className="star">
+          <span style={starStyle} onClick={() => {
+            this.props.starSuggestion(this.props.suggestion);
+          }}>
             <i className="glyphicon glyphicon-star"></i>
-          </a>
+          </span>
         </td>
         <td>
-          <a href="">
+          <span>
             <p className="suggestion-text">{this.props.suggestion.Suggestion}</p>
-          </a>
+          </span>
         </td>
         <td>
           <span className="label label-warning pull-left">{this.props.suggestion.Label}</span>
