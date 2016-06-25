@@ -31,4 +31,5 @@ public interface UserDao {
 	public User login(User user);
 	
 	public void logout(Token token);
+	
 }

@@ -41,7 +41,7 @@ public class KeyPairUtil {
         return kp;
     }
 
-    public static PrivateKey loadPrivateKey(String key64) throws GeneralSecurityException {
+    public static PrivateKey convertStringToPrivateKey(String key64) throws GeneralSecurityException {
         byte[] clear = Base64.decodeBase64(key64);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(clear);
         KeyFactory fact = KeyFactory.getInstance("RSA");
@@ -50,14 +50,14 @@ public class KeyPairUtil {
         return priv;
     }
 
-    public static PublicKey loadPublicKey(String stored) throws GeneralSecurityException {
+    public static PublicKey convertStringToPublicKey(String stored) throws GeneralSecurityException {
         byte[] data = Base64.decodeBase64(stored);
         X509EncodedKeySpec spec = new X509EncodedKeySpec(data);
         KeyFactory fact = KeyFactory.getInstance("RSA");
         return fact.generatePublic(spec);
     }
 
-    public static String savePrivateKey(PrivateKey priv) throws GeneralSecurityException {
+    public static String convertPrivateKeyToString(PrivateKey priv) throws GeneralSecurityException {
         KeyFactory fact = KeyFactory.getInstance("RSA");
         PKCS8EncodedKeySpec spec = fact.getKeySpec(priv, PKCS8EncodedKeySpec.class);
         byte[] packed = spec.getEncoded();
@@ -67,7 +67,7 @@ public class KeyPairUtil {
         return key64;
     }
 
-    public static String savePublicKey(PublicKey publ) throws GeneralSecurityException {
+    public static String convertPublicKeyToString(PublicKey publ) throws GeneralSecurityException {
         KeyFactory fact = KeyFactory.getInstance("RSA");
         X509EncodedKeySpec spec = fact.getKeySpec(publ, X509EncodedKeySpec.class);
         return Base64.encodeBase64String(spec.getEncoded());

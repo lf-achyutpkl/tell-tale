@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import com.lftechnology.tell.tale.dao.EncryptionKeyDao;
 import com.lftechnology.tell.tale.entity.EncryptionKey;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -21,7 +22,7 @@ import com.lftechnology.tell.tale.exception.ParameterFormatException;
  */
 
 @Transactional
-public class EncryptionDaoImpl implements EncryptionKeyDao {
+public class EncryptionKeyDaoImpl implements EncryptionKeyDao {
 
     @Inject
     EntityManager em;
@@ -89,5 +90,10 @@ public class EncryptionDaoImpl implements EncryptionKeyDao {
         } catch (NumberFormatException e) {
             throw new ParameterFormatException("Pagination query accepts only number value.");
         }
+    }
+
+    @Override
+    public EncryptionKey getEncryptionKey(User user) {
+        return em.createNamedQuery(EncryptionKey.GET_PUBLIC_KEY, EncryptionKey.class).setParameter("user", user).getResultList().get(0);
     }
 }
