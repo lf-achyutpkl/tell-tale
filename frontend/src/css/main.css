@@ -1,3 +1,8 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #353535;
+}
+
 #page-container {
     margin-top: 50px;
     padding: 0;
@@ -5,16 +10,23 @@
 
 .row .sidebar {
     padding-left: 0px;
+    margin-top: 10px;
 }
 
 .sidebar ul {
     list-style-type: none;
     width: 100%;
-    background-color: #f1f1f1;
+    background-color: #eee;
     margin-bottom: -5000px;
     padding:0 0 5000px 0;
     overflow: hidden;
 }
+
+.sidebar li{
+    border-top:1px solid #fff;
+    border-bottom: 1px solid #ddd;
+}
+
 
 .sidebar li a {
     display: block;
@@ -30,5 +42,43 @@
 
 .sidebar ul li a.active {
     background-color: #eee;
+}
+
+.table-suggestions {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.table-suggestions tbody tr:hover {
+    cursor: pointer;
+    background-color: #eee;
+}
+.table-suggestions tbody tr td {
+    padding: 10px;
+    vertical-align: middle;
+    border-top-color: #eee;
+}
+.table-suggestions tbody tr.selected td {
+    background-color: #eee;
+}
+.table-suggestions tr td:first-child {
+    width: 38px;
+}
+
+.table-suggestions .date{
+    font-size: 11px;
+    color: #999;
+}
+
+.suggestion-text {
+    font-size: 14px;
+    color: #353535;
+}
+
+.table-suggestions a{
+    text-decoration: none;
+}
+
+.navbar a img{
+    margin: 5px 0 5px 50px;
 }
 

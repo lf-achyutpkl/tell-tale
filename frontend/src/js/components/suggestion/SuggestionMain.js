@@ -7,7 +7,7 @@
 //React dependencies
 import React from 'react';
 
-class MessageMain extends React.Component {
+class SuggestionMain extends React.Component {
   render() {
     return (
       <div>
@@ -17,4 +17,4 @@ class MessageMain extends React.Component {
   }
 }
 
-export default MessageMain;
+export default SuggestionMain;
