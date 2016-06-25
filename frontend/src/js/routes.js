@@ -8,13 +8,12 @@ import App from './components/App';
 import LoginPage from './components/loginRegister/LoginRegisterPage';
 import SuggestionMain from './components/suggestion/SuggestionMain';
 import SuggestionList from './components/suggestion/SuggestionList';
-
-import SuggestionSend from './components/suggestion/SuggestionSend';
+import PageNotFound from './components/common/PageNotFound';
 
 const checkAuthentication = (nextState, transition) => {
-  // if (!sessionStorage.tellTaleAuth) {
-  //   transition('/tell-tale');
-  // }
+  if (!sessionStorage.tellTaleAuth) {
+    transition('/tell-tale');
+  }
 };
 
 const checkSession = (nextState, transition) => {
@@ -27,12 +26,12 @@ const history = syncHistoryWithStore(browserHistory, store);
 let routes = (
   <Router history={history}>
     <Route path="/" component={App} onEnter={checkAuthentication}>
-      <Route path="suggestions" name="Suggestions" component={SuggestionMain}>
+      <Route path="suggestions" name="suggestions" component={SuggestionMain}>
         <IndexRoute component={SuggestionList}/>
-        <Route path="new" name="Send Suggestions" component={SuggestionSend}/>
       </Route>
     </Route>
     <Route path="/tell-tale" name="Login Page" component={LoginPage} onEnter={checkSession}/>
+    <Route path="*" name="Page Not Found" component={PageNotFound}/>
   </Router>
 );
 
