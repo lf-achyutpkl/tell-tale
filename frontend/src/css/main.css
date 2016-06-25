@@ -85,6 +85,10 @@ body {
     margin: 5px 0 5px 50px;
 }
 
+.navbar button.btn {
+    margin: 10px 10px 0 0;
+}
+
 @media only screen and (max-width: 992px) {
     .sidebar ul {
         margin: 0;

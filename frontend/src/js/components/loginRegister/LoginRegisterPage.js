@@ -41,6 +41,9 @@ class LoginRegisterPage extends Component {
         this.setState({errorFields: this.state.errorFields});
         isValid = false;
       }
+      if (this.state.registerFields.password.length < 6) {
+        return isValid = false;
+      }
     }
     return isValid;
   }
@@ -187,7 +190,7 @@ class LoginRegisterPage extends Component {
               </div>
               <div className={this.state.errorFields.userName?"form-group has-error has-feedback":"form-group"}>
                 <label>Email:</label>
-                <input type="text" className="form-control" name="userName" value={this.state.registerFields.userName}
+                <input type="email" className="form-control" name="userName" value={this.state.registerFields.userName}
                        onChange={this.handleRegisterChange} onBlur={()=>this.isValidFields(this.state.registerFields)}
                        onFocus={this.removeFeedback}/>
               </div>
