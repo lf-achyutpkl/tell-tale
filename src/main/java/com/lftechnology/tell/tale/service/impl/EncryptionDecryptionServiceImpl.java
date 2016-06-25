@@ -6,6 +6,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
+import javax.ejb.Stateless;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -16,7 +17,9 @@ import com.lftechnology.tell.tale.service.EncryptionDecryptionService;
 /**
  * @author Achyut Pokhrel <achyutpokhrel@lftechnology.com> Jun 24, 2016
  * 
+ * 
  */
+@Stateless
 public class EncryptionDecryptionServiceImpl implements EncryptionDecryptionService {
 
     private static final String UNICODE_FORMAT = "UTF8";
