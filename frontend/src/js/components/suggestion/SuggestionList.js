@@ -43,8 +43,8 @@ class SuggestionList extends React.Component {
 
   renderSuggestion(key) {
     let index = parseInt(key) + 1;
-    return(
-      <SuggestionRow index={index} key={key} suggestion={suggestions[key]} />
+    return (
+      <SuggestionRow index={index} key={key} suggestion={suggestions[key]}/>
     )
   }
 
