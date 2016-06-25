@@ -50,7 +50,7 @@
         img: ['./src/img/*', './src/img/**/*'],
         fonts: './src/css/fonts/*',
         vendorJs: [
-          'node_modules/jquery/dist/jqeury.min.js',
+          'node_modules/jquery/dist/jquery.min.js',
           './src/custom-ui/bootstrap.js',
           './src/custom-ui/plugins.js',
           './src/custom-ui/app.js',
