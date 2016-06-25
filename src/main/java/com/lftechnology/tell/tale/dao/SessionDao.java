@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.lftechnology.tell.tale.entity.Session;
+import com.lftechnology.tell.tale.entity.User;
 
 /**
  * 
@@ -24,4 +25,6 @@ public interface SessionDao {
     public void remove(Session session);
 
     public void removeById(UUID id);
+    
+    public Session getSession(User user);
 }

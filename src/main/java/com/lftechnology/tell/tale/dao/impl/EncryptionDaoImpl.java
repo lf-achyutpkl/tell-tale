@@ -22,7 +22,7 @@ import com.lftechnology.tell.tale.exception.ParameterFormatException;
  */
 
 @Transactional
-public class EncryptionKeyDaoImpl implements EncryptionKeyDao {
+public class EncryptionDaoImpl implements EncryptionKeyDao {
 
     @Inject
     EntityManager em;

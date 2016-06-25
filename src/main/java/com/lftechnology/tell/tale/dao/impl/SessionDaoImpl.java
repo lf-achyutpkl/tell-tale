@@ -5,12 +5,15 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import com.lftechnology.tell.tale.dao.SessionDao;
 import com.lftechnology.tell.tale.entity.Session;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
 
@@ -88,6 +91,15 @@ public class SessionDaoImpl implements SessionDao {
             return Integer.parseInt(number);
         } catch (NumberFormatException e) {
             throw new ParameterFormatException("Pagination query accepts only number value.");
+        }
+    }
+
+    @Override
+    public Session getSession(User user) {
+        try{
+        return em.createNamedQuery(Session.GET_PRIVATE_KEY, Session.class).setParameter("user", user).getSingleResult();
+        }catch(NoResultException | NonUniqueResultException e){
+            throw new DataAccessException("Dherai ota aayo yr");
         }
     }
 }

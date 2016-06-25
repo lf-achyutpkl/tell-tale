@@ -18,7 +18,7 @@ public class EncryptionKeyServiceImpl implements EncryptionKeyService {
 
     @Inject
     private EncryptionKeyDao encryptionKeyDao;
-    
+
     @Override
     public EncryptionKey save(EncryptionKey encryptionKey) {
         return this.encryptionKeyDao.save(encryptionKey);
@@ -33,5 +33,4 @@ public class EncryptionKeyServiceImpl implements EncryptionKeyService {
     public EncryptionKey getEncryptionKey(User user) {
         return this.encryptionKeyDao.getEncryptionKey(user);
     }
-
 }

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import com.lftechnology.tell.tale.dao.SessionDao;
 import com.lftechnology.tell.tale.entity.Session;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.service.SessionService;
 
 /**
@@ -34,5 +35,10 @@ public class SessionServiceImpl implements SessionService{
 		sessionDao.removeById(id);
 		
 	}
+
+    @Override
+    public Session getSession(User user) {
+        return sessionDao.getSession(user);
+    }
 
 }

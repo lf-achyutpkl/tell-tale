@@ -8,8 +8,8 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import com.lftechnology.tell.tale.dao.SuggestionDao;
-import com.lftechnology.tell.tale.entity.DecryptionKey;
 import com.lftechnology.tell.tale.entity.EncryptionKey;
+import com.lftechnology.tell.tale.entity.Session;
 import com.lftechnology.tell.tale.entity.Suggestion;
 import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.EncryptionException;
@@ -17,6 +17,7 @@ import com.lftechnology.tell.tale.pojo.SecurityRequestContext;
 import com.lftechnology.tell.tale.service.DecryptionKeyService;
 import com.lftechnology.tell.tale.service.EncryptionDecryptionService;
 import com.lftechnology.tell.tale.service.EncryptionKeyService;
+import com.lftechnology.tell.tale.service.SessionService;
 import com.lftechnology.tell.tale.service.SuggestionService;
 import com.lftechnology.tell.tale.util.KeyPairUtil;
 
@@ -38,6 +39,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 
     @Inject
     private EncryptionKeyService encryptionKeyService;
+    
+    @Inject
+    private SessionService sessionService;
 
     @Override
     public Suggestion save(Suggestion suggestion) {
@@ -48,9 +52,11 @@ public class SuggestionServiceImpl implements SuggestionService {
             PublicKey pubk = KeyPairUtil.convertStringToPublicKey(ekey.getValue());
             message = this.encryptMessage(suggestion.getMessage(), pubk);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new EncryptionException();
         }
         suggestion.setMessage(message);
+        System.out.println("Hello World");
         return this.suggestionDao.save(suggestion);
     }
 
@@ -58,13 +64,16 @@ public class SuggestionServiceImpl implements SuggestionService {
     public Suggestion findOne(UUID id) {
         Suggestion suggestion = this.suggestionDao.findOne(id);
         User user = suggestion.getRecepient();
-        DecryptionKey dkey = this.decryptionKeyService.getDecryptionKey(user);
+        Session session = this.sessionService.getSession(user);
+        String dkey = session.getEncryptedPrivateKey();
         String message = "";
         try{
-            String decryptedKey = this.encryptionDecryptionService.decrypt(dkey.getValue(), SecurityRequestContext.getRandomKey());
-            PrivateKey privateKey = KeyPairUtil.convertStringToPrivateKey(decryptedKey);
+            System.out.println("/n/n/n/n/n"+SecurityRequestContext.getRandomKey());
+            String actualPrivateKey = this.encryptionDecryptionService.decrypt(dkey, SecurityRequestContext.getRandomKey());
+            PrivateKey privateKey = KeyPairUtil.convertStringToPrivateKey(actualPrivateKey);
             message = this.decryptMessage(suggestion.getMessage(), privateKey);
         }catch(Exception e){
+            e.printStackTrace();
             throw new EncryptionException();
         }
         suggestion.setMessage(message);
