@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import com.lftechnology.tell.tale.dao.DecryptionKeyDao;
 import com.lftechnology.tell.tale.entity.DecryptionKey;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.service.DecryptionKeyService;
 
 /**
@@ -28,6 +29,11 @@ public class DecryptionKeyServiceImpl implements DecryptionKeyService {
     @Override
     public DecryptionKey findOne(UUID id) {
         return this.decryptionKeyDao.findOne(id);
+    }
+
+    @Override
+    public DecryptionKey getDecryptionKey(User user) {
+        return this.decryptionKeyDao.getDecryptionKey(user);
     }
 
 }

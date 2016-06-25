@@ -3,10 +3,11 @@ package com.lftechnology.tell.tale.service.impl;
 import java.util.UUID;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
+import javax.enterprise.inject.Default;
 
 import com.lftechnology.tell.tale.dao.EncryptionKeyDao;
 import com.lftechnology.tell.tale.entity.EncryptionKey;
+import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.service.EncryptionKeyService;
 
 /**
@@ -17,9 +18,9 @@ import com.lftechnology.tell.tale.service.EncryptionKeyService;
 @Stateless
 public class EncryptionKeyServiceImpl implements EncryptionKeyService {
 
-    @Inject
+    @Default
     private EncryptionKeyDao encryptionKeyDao;
-    
+
     @Override
     public EncryptionKey save(EncryptionKey encryptionKey) {
         return this.encryptionKeyDao.save(encryptionKey);
@@ -30,4 +31,8 @@ public class EncryptionKeyServiceImpl implements EncryptionKeyService {
         return this.encryptionKeyDao.findOne(id);
     }
 
+    @Override
+    public EncryptionKey getEncryptionKey(User user) {
+        return this.encryptionKeyDao.getEncryptionKey(user);
+    }
 }

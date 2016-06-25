@@ -46,8 +46,10 @@ public class Suggestion extends AbstractEntity implements Serializable {
     @NotNull(message = "Recepient cannot be null")
     private User recepient;
 
+    @Column(name = "is_seen")
     private boolean seen;
 
+    @Column(name = "is_starred")
     private boolean starred;
 
     @Column(name = "created_at", columnDefinition = "uuid")

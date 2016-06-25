@@ -13,14 +13,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.lftechnology.tell.tale.util.LocalDateTimeAttributeConverter;
 import com.lftechnology.tell.tale.util.LocalDateTimeDeserializer;
 import com.lftechnology.tell.tale.util.LocalDateTimeSerializer;
+
+import lombok.Getter;
+import lombok.Setter;
 /**
  * 
  * @author Prajjwal Raj Kandel<prajjwalkandel@lftechnology.com>
@@ -31,14 +31,15 @@ import com.lftechnology.tell.tale.util.LocalDateTimeSerializer;
 @Getter
 @Setter
 @NamedQueries({
-	@NamedQuery(name=Session.LOGOUT, query="DELETE FROM Session s WHERE s.user = :user")})
+	@NamedQuery(name=Session.LOGOUT, query="DELETE FROM Session s WHERE s.user = :user"),
+	@NamedQuery(name=Session.GET_PRIVATE_KEY, query="SELECT s FROM Session s WHERE s.user = :user")})
 public class Session extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -515722889297668323L;
     private static final String PREFIX = "tell.tale.session";
     public static final String LOGOUT =PREFIX + "logout";
+    public static final String GET_PRIVATE_KEY =PREFIX + "getPrivateKey";
 
-    
     public Session(User user,String encryptedPrivateKey, LocalDateTime expiresAt) {
     	this.user = user;
     	this.encryptedPrivateKey = encryptedPrivateKey;

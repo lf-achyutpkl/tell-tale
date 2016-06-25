@@ -19,4 +19,6 @@ public interface SessionService {
     public void removeById(UUID id);
     
     public void logout(User user);
+
+    public Session getSession(User user);
 }

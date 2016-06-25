@@ -96,4 +96,6 @@ public class DecryptionKeyDaoImpl implements DecryptionKeyDao {
 	public DecryptionKey getDecryptionKey(User user) {
 		return em.createNamedQuery(DecryptionKey.GET_PRIVATE_KEY,DecryptionKey.class).setParameter("user",user).getResultList().get(0);
 	}
+	
+	
 }

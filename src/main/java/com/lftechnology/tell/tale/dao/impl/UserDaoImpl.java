@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import com.lftechnology.tell.tale.dao.UserDao;
-import com.lftechnology.tell.tale.entity.Token;
 import com.lftechnology.tell.tale.entity.User;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;

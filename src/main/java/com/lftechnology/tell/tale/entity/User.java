@@ -33,7 +33,7 @@ public class User extends AbstractEntity implements Serializable {
     public static final String GET_USER_FROM_EMAIL_AND_PASSWORD = User.PREFIX + "getUserFromEmailAndPassword";
 
     private static final long serialVersionUID = -515722889297668323L;
-
+    
     @NotBlank(message = "Name cannot be blank.")
     @Size(max = 255)
     private String name;
