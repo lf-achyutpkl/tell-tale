@@ -7,6 +7,7 @@
 import React from 'react';
 
 import SuggestionRow from './SuggestionRow';
+import SuggestionSend from './SuggestionSend';
 
 let suggestions = [
   {
@@ -41,6 +42,19 @@ let suggestions = [
 
 class SuggestionList extends React.Component {
 
+  constructor() {
+    super();
+    this.closeModal = this.closeModal.bind(this);
+
+    this.state = {
+      show: false
+    }
+  }
+
+  closeModal(event) {
+    this.setState({show: false})
+  }
+
   renderSuggestion(key) {
     let index = parseInt(key) + 1;
     return (
@@ -51,6 +65,9 @@ class SuggestionList extends React.Component {
   render() {
     return (
       <div>
+        <a title="Send Suggestion" className="btn btn-sm btn-primary text-uppercase pull-right"
+           onClick={()=>this.setState({show:true})}><i
+          className="fa fa-plus"></i>Send Suggestion</a>
         <div>
           <h2>Suggestions</h2>
         </div>
@@ -61,6 +78,7 @@ class SuggestionList extends React.Component {
             </tbody>
           </table>
         </div>
+        <SuggestionSend show={this.state.show} onHide={this.closeModal}/>
       </div>
     )
   }

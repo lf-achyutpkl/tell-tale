@@ -46,11 +46,9 @@ let apiUtil = {
         .set('Accept', 'application/json')
         .end((err, res)=> {
           if (err || !res) {
-            console.log(err, 'err');
             reject(err);
           }
           else {
-            console.log(res, 'res');
             resolve(res.body);
           }
         })
