@@ -93,21 +93,24 @@ class LoginRegisterPage extends Component {
 
   register(event) {
     event.preventDefault();
-
-    if (this.isValidFields(this.state.registerFields)) {
-      let userData = {
-        name: this.state.registerFields.fullName,
-        email: this.state.registerFields.userName,
-        password: this.state.registerFields.password
-      };
-      TellTaleService.register(userData).then(
-        ()=> {
-          Toastr.success('Congratulation! You have been successfully registered');
-          this.setState({showRegister: false});
-        })
-        .catch(()=> {
-          Toastr.error('Error while registering, Please try again');
-        });
+    if (this.state.registerFields.password.length > 5) {
+      if (this.isValidFields(this.state.registerFields)) {
+        let userData = {
+          name: this.state.registerFields.fullName,
+          email: this.state.registerFields.userName,
+          password: this.state.registerFields.password
+        };
+        TellTaleService.register(userData).then(
+          ()=> {
+            Toastr.success('Congratulation! You have been successfully registered');
+            this.setState({showRegister: false});
+          })
+          .catch(()=> {
+            Toastr.error('Error while registering, Please try again');
+          });
+      }
+    } else {
+      Toastr.error('Password must be of more than 5 characters');
     }
   }
 
@@ -159,7 +162,8 @@ class LoginRegisterPage extends Component {
               </div>
               <div className={this.state.errorFields.password?"form-group has-error has-feedback":"form-group"}>
                 <label>Password:</label>
-                <input type="password" className="form-control" name="password" value={this.state.loginFields.password}
+                <input type="password" className="form-control" name="password"
+                       value={this.state.loginFields.password}
                        onChange={this.handleLoginChange} onBlur={()=>this.isValidFields(this.state.loginFields)}
                        onFocus={this.removeFeedback}/>
               </div>
@@ -187,7 +191,8 @@ class LoginRegisterPage extends Component {
               </div>
               <div className={this.state.errorFields.userName?"form-group has-error has-feedback":"form-group"}>
                 <label>Email:</label>
-                <input type="text" className="form-control" name="userName" value={this.state.registerFields.userName}
+                <input type="email" className="form-control" name="userName"
+                       value={this.state.registerFields.userName}
                        onChange={this.handleRegisterChange} onBlur={()=>this.isValidFields(this.state.registerFields)}
                        onFocus={this.removeFeedback}/>
               </div>
@@ -210,4 +215,6 @@ class LoginRegisterPage extends Component {
   }
 }
 
-export default LoginRegisterPage;
+export
+default
+LoginRegisterPage;

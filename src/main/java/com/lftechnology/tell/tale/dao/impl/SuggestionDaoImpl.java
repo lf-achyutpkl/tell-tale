@@ -13,6 +13,7 @@ import com.lftechnology.tell.tale.dao.SuggestionDao;
 import com.lftechnology.tell.tale.entity.Suggestion;
 import com.lftechnology.tell.tale.exception.DataAccessException;
 import com.lftechnology.tell.tale.exception.ParameterFormatException;
+import com.lftechnology.tell.tale.pojo.SecurityRequestContext;
 
 /**
  * 
@@ -63,9 +64,10 @@ public class SuggestionDaoImpl implements SuggestionDao {
 
     @Override
     public List<Suggestion> find(String start, String offset) {
-        TypedQuery<Suggestion> query = em.createQuery("SELECT s FROM Suggestion s ORDER BY s.createdAt", Suggestion.class);
-        query.setFirstResult(toInteger(start));
-        query.setMaxResults(toInteger(offset));
+        TypedQuery<Suggestion> query = em.createQuery("SELECT s FROM Suggestion s WHERE s.recepient = :recepient ORDER BY s.createdAt DESC", Suggestion.class);
+//        query.setFirstResult(toInteger(start));
+//        query.setMaxResults(toInteger(offset));
+        query.setParameter("recepient", SecurityRequestContext.getCurrentUser());
         return query.getResultList();
     }
 
@@ -85,7 +87,7 @@ public class SuggestionDaoImpl implements SuggestionDao {
 
     @Override
     public long count() {
-        TypedQuery<Suggestion> query = em.createQuery("Select s from Suggestion u", Suggestion.class);
+        TypedQuery<Suggestion> query = em.createQuery("Select s from Suggestion s WHERE s.recepient = :recepient", Suggestion.class).setParameter("recepient", SecurityRequestContext.getCurrentUser());
         List<Suggestion> suggestions = query.getResultList();
         return suggestions.size();
     }

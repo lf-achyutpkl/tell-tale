@@ -54,6 +54,23 @@ let apiUtil = {
         })
     });
   },
+  create(url, pathParam, data){
+    return new Promise((resolve, reject)=> {
+      request
+        .post(url + pathParam)
+        .send(data)
+        .set('Authorization', 'Bearer ' + sessionStorage.getItem('tellTaleAuth'))
+        .set('Accept', 'application/json')
+        .end((err, res)=> {
+          if (err || !res) {
+            reject(err);
+          } else {
+            resolve(res.body);
+          }
+        })
+    });
+  },
+
   register(url, data){
     return new Promise((resolve, reject)=> {
       request

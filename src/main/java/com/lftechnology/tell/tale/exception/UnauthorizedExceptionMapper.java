@@ -19,6 +19,6 @@ public class UnauthorizedExceptionMapper implements ExceptionMapper<Unauthorized
     @Override
     public Response toResponse(UnauthorizedException exception) {
         ErrorMessage errorMessage = new ErrorMessage(exception.getMessage());
-        return Response.status(Response.Status.BAD_REQUEST).entity(errorMessage).type(MediaType.APPLICATION_JSON).build();
+        return Response.status(Response.Status.UNAUTHORIZED).entity(errorMessage).type(MediaType.APPLICATION_JSON).build();
     }
 }

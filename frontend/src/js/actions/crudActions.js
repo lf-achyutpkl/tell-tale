@@ -60,8 +60,6 @@ let crudActions = {
         .then((response)=> {
           dispatch(apiActions.apiResponse());
           dispatch(actions.update(entity, response.data));
-          console.log(response.data);
-          debugger;
           Toastr.success('Successfully Updated');
         })
         .catch((error) => {

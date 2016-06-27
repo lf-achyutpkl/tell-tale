@@ -31,4 +31,6 @@ public interface UserService {
 	public Token login(User userObj);
 	
 	public void logout(User user);
+	
+	public List<User> search(String search);
 }

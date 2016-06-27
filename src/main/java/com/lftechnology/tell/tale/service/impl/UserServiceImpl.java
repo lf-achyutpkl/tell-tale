@@ -75,9 +75,9 @@ public class UserServiceImpl implements UserService {
         String encryptionKey = "";
         try {
             KeyPair kp = KeyPairUtil.generateKeyPair();
-            String decryptionKey = KeyPairUtil.savePrivateKey(kp.getPrivate());
+            String decryptionKey = KeyPairUtil.convertPrivateKeyToString(kp.getPrivate());
             encryptedDecryptionKey = encryptionDecryptionService.encrypt(decryptionKey, password);
-            encryptionKey = KeyPairUtil.savePublicKey(kp.getPublic());
+            encryptionKey = KeyPairUtil.convertPublicKeyToString(kp.getPublic());
         } catch (Exception e) {
             throw new EncryptionException();
         }
@@ -152,8 +152,8 @@ public class UserServiceImpl implements UserService {
 		String decryptionKey = encryptionDecryptionService.decrypt(encryptedDecryptionKey, password);
 		String toEncryptKey = "";
 		try {
-			PrivateKey pkey = KeyPairUtil.loadPrivateKey(decryptionKey);
-			toEncryptKey = KeyPairUtil.savePrivateKey(pkey);
+			PrivateKey pkey = KeyPairUtil.convertStringToPrivateKey(decryptionKey);
+			toEncryptKey = KeyPairUtil.convertPrivateKeyToString(pkey);
 		} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -177,4 +177,9 @@ public class UserServiceImpl implements UserService {
 	public void logout(User user) {
 		sessionService.logout(user);
 	}
+
+    @Override
+    public List<User> search(String search) {
+        return this.userDao.search(search);
+    }
 }

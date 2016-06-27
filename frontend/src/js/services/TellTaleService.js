@@ -18,6 +18,9 @@ let coreApiService = {
     let queryParams = '';
     return apiUtil.fetch(url, pathParam.toLowerCase(), queryParams);
   },
+  create(data){
+    return apiUtil.create(url,'suggestions',data);
+  },
   register(data){
     return apiUtil.register(url + 'users/', data);
   },

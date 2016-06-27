@@ -85,9 +85,13 @@ body {
     margin: 5px 0 5px 50px;
 }
 
-.modal-body .label{
+.modal-body .label {
     margin: 0 10px 0 0;
     padding: 5px;
+}
+
+.navbar button.btn {
+    margin: 10px 10px 0 0;
 }
 
 @media only screen and (max-width: 992px) {

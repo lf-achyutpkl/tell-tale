@@ -28,4 +28,6 @@ public interface UserDao {
     public long count();
     
 	public User login(User user);
+	
+	public List<User> search(String search);
 }

@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import {Link} from 'react-router';
 
 class Sidebar extends React.Component {
 
@@ -12,7 +13,7 @@ class Sidebar extends React.Component {
     return (
       <div className="col-md-3 sidebar">
         <ul>
-          <li><a href="/suggestions">All Messages</a></li>
+          <li><Link to="/suggestions">All Messages</Link></li>
           <li><a href="#">Starred Messages</a></li>
         </ul>
       </div>

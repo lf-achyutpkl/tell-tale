@@ -16,7 +16,7 @@ class SuggestionRow extends React.Component {
     this.close = this.close.bind(this);
     this.state = {
       isShowModal: false,
-      suggestion: {suggestion: '',label: '', createdAt: ''}
+      suggestion: {suggestion: '', createdAt: ''}
     }
   }
 
@@ -32,7 +32,7 @@ class SuggestionRow extends React.Component {
 
   render() {
     let isStarred = this.props.suggestion.starred;
-    let fullMessage = this.props.suggestion.suggestion;
+    let fullMessage = this.props.suggestion.message;
     let shortMessage = fullMessage.substr(0, 100);
     let starStyle = isStarred ? {color: '#f0ad4e'} : {color: '#ccc'};
     return (
@@ -55,9 +55,6 @@ class SuggestionRow extends React.Component {
           </span>
         </td>
         <td>
-          <span className="label label-warning pull-left">{this.props.suggestion.label}</span>
-        </td>
-        <td>
           <span className="date pull-right">{this.props.suggestion.createdAt}</span>
         </td>
 
@@ -67,8 +64,7 @@ class SuggestionRow extends React.Component {
               <Modal.Title>Suggestion</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p>{this.state.suggestion.suggestion}</p>
-              <span className="label label-warning pull-left">{this.state.suggestion.label}</span>
+              <p>{this.state.suggestion.message}</p>
               <span>Created At {this.state.suggestion.createdAt}</span>
             </Modal.Body>
           </Modal>

@@ -20,10 +20,12 @@ class SuggestionSend extends Component {
     this.saveSuggestion = this.saveSuggestion.bind(this);
     this.removeFeedback = this.removeFeedback.bind(this);
     this.handleMessageFieldChange = this.handleMessageFieldChange.bind(this);
-
+    this.handleSelectChange = this.handleSelectChange.bind(this);
     this.state = {
-      errorFields: {receiver: false, label: false, suggestion: false}
-    };
+      errorFields: {receiver: false, suggestion: false},
+      receiver: {value: '', label: ''},
+      suggestion: ''
+    }
   }
 
   isValidFields(field) {
@@ -67,7 +69,6 @@ class SuggestionSend extends Component {
           label: responseData.name
         });
       }
-      debugger;
       return {options: options};
     }).catch((error) => {
       return {}
@@ -76,8 +77,6 @@ class SuggestionSend extends Component {
 
   validateFields() {
     let requiredFields = {
-      receiver: this.refs.receiverEmail.props.value.value,
-      label: this.refs.label.props.value.value,
       suggestion: this.refs.suggestion.value
     };
     for (let key in requiredFields) {
@@ -92,14 +91,29 @@ class SuggestionSend extends Component {
 
   saveSuggestion() {
     if (this.validateFields()) {
+      console.log(this.state.receiver.value);
+      console.log(this.refs.suggestion.value);
       //save suggestion and if success ->
-      this.props.onHide();
+      TellTaleService.create({
+        recepient: {id: this.state.receiver.value},
+        message: this.refs.suggestion.value
+      }).then(response=> {
+        Toastr.success('Successfully sent suggestion');
+        this.props.onHide();
+      })
+        .catch(error=> {
+          Toastr.error('Invalid Data! Try Again');
+        });
+
     } else {
       Toastr.error('Enter data in all fields');
     }
   }
 
-  handleChange(event) {
+  handleSelectChange(value) {
+    this.state.receiver['value'] = value.value;
+    this.state.receiver['label'] = value.label;
+    this.setState({receiver: this.state.receiver});
   }
 
   render() {
@@ -117,25 +131,10 @@ class SuggestionSend extends Component {
               <Select.Async
                 name="receiverEmail"
                 ref="receiverEmail"
-                value=""
+                value={this.state.receiver}
                 loadOptions={this.getSelectOptions}
                 placeholder="ReceiverEmail"
-                multi={false}
-              />
-              <span className="help-block"></span>
-            </div>
-          </div>
-          <div className="row clearfix">
-            <div className="col-md-2">
-              <span className="">Label</span>
-            </div>
-            <div className="col-md-10 form-group">
-              <Select.Async
-                name="label"
-                ref="label"
-                value={{value:'123',label:'Android'}}
-                loadOptions={this.getSelectOptions}
-                placeholder="Label"
+                onChange={this.handleSelectChange}
                 multi={false}
               />
               <span className="help-block"></span>

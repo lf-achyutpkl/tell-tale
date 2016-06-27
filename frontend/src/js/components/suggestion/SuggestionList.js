@@ -59,6 +59,7 @@ class SuggestionList extends React.Component {
   }
 
   render() {
+    console.log(this.props.suggestions);
     return (
       <div>
         <a title="Send Suggestion" className="btn btn-sm btn-primary text-uppercase pull-right"
@@ -70,7 +71,7 @@ class SuggestionList extends React.Component {
         <div className="table-container">
           <table className="table table-suggestions">
             <tbody>
-            {Object.keys(this.props.suggestions).map(this.renderSuggestion)}
+            {this.props.suggestions && this.props.suggestions.length > 0 && Object.keys(this.props.suggestions).map(this.renderSuggestion)}
             </tbody>
           </table>
         </div>
@@ -83,7 +84,7 @@ class SuggestionList extends React.Component {
 let mapStateToProps = function (state) {
   return {
     suggestions: state.crudReducer.suggestions,
-    users:state.crudReducer.users,
+    users: state.crudReducer.users,
     apiState: state.apiReducer
   }
 };
